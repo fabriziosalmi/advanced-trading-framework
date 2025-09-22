@@ -1,0 +1,20 @@
+{
+  "ticker": "GOOGL",
+  "training_date": "2025-09-23T00:37:11.588515",
+  "hyperparameters": {
+    "class_weight": null,
+    "max_depth": 10,
+    "max_features": null,
+    "min_samples_leaf": 1,
+    "min_samples_split": 10,
+    "n_estimators": 200
+  },
+  "evaluation_metrics": {
+    "accuracy": 0.48484848484848486,
+    "precision": 0.6976721908228757,
+    "recall": 0.48484848484848486,
+    "f1_score": 0.47579318994750774,
+    "roc_auc": 0.5903381642512078
+  },
+  "feature_count": 77
+}

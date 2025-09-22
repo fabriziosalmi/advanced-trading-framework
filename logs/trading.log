@@ -1,0 +1,548 @@
+2025-09-23 00:31:35,180 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:31:35,181 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:31:35,181 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:31:35,181 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:31:35,181 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:31:35,181 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:31:35,182 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:31:35,182 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:31:35,182 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:31:35,182 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:31:35,182 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:31:35,182 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:31:35,182 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:31:35,182 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:31:35,182 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:31:35,182 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:31:35,183 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:47:34,179 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:47:34,179 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:47:34,179 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:47:34,179 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:47:34,179 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:47:34,179 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:47:34,179 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:47:34,179 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:47:34,180 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:47:34,180 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:47:34,180 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:47:34,180 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:47:34,180 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:47:34,180 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:47:34,180 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:47:34,180 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:47:34,180 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:48:37,970 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:48:37,970 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:48:37,970 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:48:37,970 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:48:37,970 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:48:37,970 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:48:37,970 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:48:37,970 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:48:37,971 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:48:37,971 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:48:37,971 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:48:37,971 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:48:37,971 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:48:37,971 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:48:37,971 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:48:37,971 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:48:37,971 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:52:21,545 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:52:21,545 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:52:21,545 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:52:21,545 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:52:21,545 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:52:21,545 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:52:21,545 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:52:21,545 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:52:21,546 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:52:21,546 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:52:21,546 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:52:21,546 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:52:21,546 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:52:21,546 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:52:21,546 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:52:21,546 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:52:21,546 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:54:23,757 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:54:23,757 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:54:23,757 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:54:23,758 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:54:23,758 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:54:23,758 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:54:23,758 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:54:23,758 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:54:23,758 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:54:23,758 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:54:23,758 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:54:23,758 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:54:23,758 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:54:23,758 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:54:23,758 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:54:23,759 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:54:23,759 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:54:52,141 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:54:52,141 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:54:52,141 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:54:52,141 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:54:52,141 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:54:52,141 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:54:52,141 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:54:52,141 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:54:52,142 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:54:52,142 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:54:52,142 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:54:52,142 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:54:52,142 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:54:52,142 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:54:52,142 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:54:52,142 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:54:52,142 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:55:51,958 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:55:51,958 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:55:51,958 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:55:51,959 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:55:51,959 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:55:51,959 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:55:51,959 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:55:51,959 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:55:51,959 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:55:51,959 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:55:51,959 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:55:51,959 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:55:51,959 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:55:51,959 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:55:51,959 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:55:51,959 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:55:51,959 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:56:21,853 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:56:21,854 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:56:21,854 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:56:21,854 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:56:21,854 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:56:21,854 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:56:21,854 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:56:21,854 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:56:21,854 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:56:21,854 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:56:21,854 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:56:21,854 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:56:21,854 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:56:21,854 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:56:21,854 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:56:21,854 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:56:21,854 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 00:58:04,593 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 00:58:04,594 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 00:58:04,594 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 00:58:04,594 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 00:58:04,594 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:58:04,594 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 00:58:04,594 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 00:58:04,594 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 00:58:04,594 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 00:58:04,595 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 00:58:04,595 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 00:58:04,595 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 00:58:04,595 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 00:58:04,595 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 00:58:04,595 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 00:58:04,595 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 00:58:04,595 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:00:03,010 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 01:00:03,010 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 01:00:03,010 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 01:00:03,011 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 01:00:03,011 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:00:03,011 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 01:00:03,011 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:00:03,011 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 01:00:03,011 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 01:00:03,011 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 01:00:03,011 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 01:00:03,011 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 01:00:03,011 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 01:00:03,011 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 01:00:03,011 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 01:00:03,011 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 01:00:03,011 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:01:10,281 - root - WARNING - Function generate_signals failed, using fallback: MLRandomForestStrategy.generate_signals() missing 2 required positional arguments: 'portfolio' and 'cash'
+2025-09-23 01:01:10,281 - root - WARNING - Function generate_signals failed, using fallback: MLRandomForestStrategy.generate_signals() missing 2 required positional arguments: 'portfolio' and 'cash'
+2025-09-23 01:01:10,281 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:01:10,281 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:01:16,991 - root - WARNING - Function generate_signals failed, using fallback: MLRandomForestStrategy.generate_signals() missing 2 required positional arguments: 'portfolio' and 'cash'
+2025-09-23 01:01:16,991 - root - WARNING - Function generate_signals failed, using fallback: MLRandomForestStrategy.generate_signals() missing 2 required positional arguments: 'portfolio' and 'cash'
+2025-09-23 01:01:16,991 - root - WARNING - Function generate_signals failed, using fallback: MLRandomForestStrategy.generate_signals() missing 2 required positional arguments: 'portfolio' and 'cash'
+2025-09-23 01:01:16,991 - root - WARNING - Function generate_signals failed, using fallback: MLRandomForestStrategy.generate_signals() missing 2 required positional arguments: 'portfolio' and 'cash'
+2025-09-23 01:01:16,991 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:01:16,991 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:01:16,991 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:01:16,991 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:06:47,622 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 01:06:47,622 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 01:06:47,622 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 01:06:47,623 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 01:06:47,623 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:06:47,623 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 01:06:47,623 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:06:47,623 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 01:06:47,623 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 01:06:47,623 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 01:06:47,623 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 01:06:47,623 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 01:06:47,623 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 01:06:47,623 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 01:06:47,623 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 01:06:47,623 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 01:06:47,623 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:06:59,349 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:06:59,349 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:07:02,620 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:07:02,620 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for AAPL with 22 columns
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for AAPL with 22 columns
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for AAPL: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for AAPL: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:07:02,621 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:07:02,625 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:07:02,625 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:07:02,626 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for AAPL: 'MLRandomForestStrategy' object has no attribute 'calculate_technical_indicators'
+2025-09-23 01:07:02,626 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for AAPL: 'MLRandomForestStrategy' object has no attribute 'calculate_technical_indicators'
+2025-09-23 01:07:02,826 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:07:02,826 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:07:02,992 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:07:02,992 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:07:02,993 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:07:02,994 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:07:02,994 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:07:02,994 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MLRandomForestStrategy' object has no attribute 'calculate_technical_indicators'
+2025-09-23 01:07:02,994 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MLRandomForestStrategy' object has no attribute 'calculate_technical_indicators'
+2025-09-23 01:07:02,994 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:07:02,994 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:07:57,114 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 01:07:57,114 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 01:07:57,114 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 01:07:57,114 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 01:07:57,115 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:07:57,115 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 01:07:57,115 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:07:57,115 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 01:07:57,115 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 01:07:57,115 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 01:07:57,115 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 01:07:57,115 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 01:07:57,115 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 01:07:57,115 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 01:07:57,115 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 01:07:57,115 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 01:07:57,115 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:08:08,429 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:08:08,429 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:08:11,695 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:08:11,695 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for AAPL with 22 columns
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for AAPL with 22 columns
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for AAPL: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for AAPL: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:08:11,696 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:08:11,700 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:08:11,700 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:08:11,700 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:08:11,700 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:08:11,700 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:08:11,700 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:08:11,704 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:08:11,704 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:09:41,886 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:09:41,886 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:09:41,888 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for AAPL: 'MLRandomForestStrategy' object has no attribute '_prepare_features'
+2025-09-23 01:09:41,888 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for AAPL: 'MLRandomForestStrategy' object has no attribute '_prepare_features'
+2025-09-23 01:09:42,216 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:09:42,216 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:09:42,404 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:09:42,404 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:09:42,405 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:09:42,406 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:09:42,406 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:09:42,406 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:09:42,406 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:09:42,406 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:09:42,406 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:09:42,409 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:09:42,409 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:11:11,971 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:11:11,971 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:11:11,973 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MLRandomForestStrategy' object has no attribute '_prepare_features'
+2025-09-23 01:11:11,973 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MLRandomForestStrategy' object has no attribute '_prepare_features'
+2025-09-23 01:11:11,973 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:11:11,973 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:11:47,130 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 01:11:47,131 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 01:11:47,131 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 01:11:47,131 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 01:11:47,131 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:11:47,131 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 01:11:47,131 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:11:47,131 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 01:11:47,132 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 01:11:47,132 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 01:11:47,132 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 01:11:47,132 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 01:11:47,132 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 01:11:47,132 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 01:11:47,132 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 01:11:47,132 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 01:11:47,132 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:11:55,111 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:11:55,111 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:11:55,111 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:11:58,440 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:11:58,440 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:11:58,440 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:11:58,442 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:11:58,446 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:11:58,450 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:11:58,450 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:11:58,450 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:13:27,432 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:13:27,432 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:13:27,432 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:13:27,433 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:13:27,433 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:13:27,433 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:13:27,433 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:13:27,433 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:13:27,433 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:13:27,435 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MLRandomForestStrategy' object has no attribute 'model'
+2025-09-23 01:13:27,435 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MLRandomForestStrategy' object has no attribute 'model'
+2025-09-23 01:13:27,435 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MLRandomForestStrategy' object has no attribute 'model'
+2025-09-23 01:13:27,435 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:13:27,435 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:13:27,435 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:13:59,692 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 01:13:59,692 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 01:13:59,692 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 01:13:59,693 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 01:13:59,693 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:13:59,693 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 01:13:59,693 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:13:59,693 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 01:13:59,693 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 01:13:59,693 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 01:13:59,693 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 01:13:59,693 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 01:13:59,693 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 01:13:59,693 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 01:13:59,694 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 01:13:59,694 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 01:13:59,694 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:14:06,218 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:14:06,218 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:14:06,218 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:14:09,245 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:14:09,245 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:14:09,245 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:14:09,246 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:14:09,247 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:14:09,247 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:14:09,247 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:14:09,250 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:14:09,254 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:14:09,254 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:14:09,254 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:15:38,051 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:15:38,051 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:15:38,051 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:15:38,052 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:15:38,052 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:15:38,052 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:15:38,052 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:15:38,052 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:15:38,052 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:15:38,054 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MSFT'
+2025-09-23 01:15:38,054 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MSFT'
+2025-09-23 01:15:38,054 - strategy_layer.strategy_base.MLRandomForest - ERROR - Error generating signal for MSFT: 'MSFT'
+2025-09-23 01:15:38,054 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:15:38,054 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:15:38,054 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:16:38,421 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 01:16:38,421 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 01:16:38,421 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 01:16:38,421 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 01:16:38,421 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:16:38,421 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 01:16:38,421 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:16:38,422 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 01:16:38,422 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 01:16:38,422 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 01:16:38,422 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 01:16:38,422 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 01:16:38,422 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 01:16:38,422 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 01:16:38,422 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 01:16:38,422 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 01:16:38,422 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:16:45,735 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:16:45,735 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:16:45,735 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:16:49,562 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:16:49,562 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:16:49,562 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:16:49,564 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:16:49,569 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:16:49,573 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:16:49,573 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:16:49,573 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:18:18,755 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:18:18,755 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:18:18,755 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:18:18,757 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:18:18,757 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:18:18,757 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:18:18,757 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:18:18,757 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:18:18,757 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:18:18,759 - strategy_layer.strategy_base.MLRandomForest - WARNING - No trained model available for MSFT
+2025-09-23 01:18:18,759 - strategy_layer.strategy_base.MLRandomForest - WARNING - No trained model available for MSFT
+2025-09-23 01:18:18,759 - strategy_layer.strategy_base.MLRandomForest - WARNING - No trained model available for MSFT
+2025-09-23 01:18:18,759 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:18:18,759 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:18:18,759 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:23:41,825 - TradingApp - WARNING - Config warning - strategy.ml_random_forest.lookback_period: Lookback period 1250 days is outside recommended range (30-500)
+2025-09-23 01:23:41,825 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 01:23:41,825 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 01:23:41,825 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 01:23:41,826 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:23:41,826 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 01:23:41,826 - core.portfolio - INFO - Portfolio state loaded: 0 positions, $100000.00 cash
+2025-09-23 01:23:41,826 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 01:23:41,826 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 01:23:41,826 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 01:23:41,826 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 01:23:41,826 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 01:23:41,826 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 01:23:41,826 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 01:23:41,826 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 01:23:41,826 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 01:23:41,826 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 01:23:49,877 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:23:49,877 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:23:49,877 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Fetching extended market data...
+2025-09-23 01:23:53,497 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:23:53,497 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:23:53,497 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data ready: 17 indicators
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Extended market data merged: 17 additional columns
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - Fetched 3480 data points for MSFT with 22 columns
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - 📅 First 5 timestamps for MSFT: [Timestamp('2023-09-25 09:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 10:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 11:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 12:30:00-0400', tz='America/New_York'), Timestamp('2023-09-25 13:30:00-0400', tz='America/New_York')]
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:23:53,498 - strategy_layer.strategy_base.MLRandomForest - INFO - 🕒 Data time interval verified: 0 days 01:00:00
+2025-09-23 01:23:53,501 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:23:53,501 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:23:53,501 - strategy_layer.strategy_base.MLRandomForest - INFO - 🏛️ Filtered to market hours: 3480 hourly bars remaining
+2025-09-23 01:23:53,502 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:23:53,502 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:23:53,502 - strategy_layer.strategy_base.MLRandomForest - INFO - Starting CAUSAL _calculate_technical_indicators with data shape: (3480, 22)
+2025-09-23 01:23:53,502 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:23:53,502 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:23:53,502 - strategy_layer.strategy_base.MLRandomForest - INFO - Input data columns: ['open', 'high', 'low', 'close', 'volume', 'VIX_close', 'SPY_close', 'QQQ_close', 'IWM_close', 'GLD_close', 'USO_close', 'TLT_close', 'IEF_close', 'SHY_close', 'XLE_close', 'XLF_close', 'XLK_close', 'XLV_close', 'XLI_close', 'SPY_returns', 'yield_spread_20y_2y', 'gold_oil_ratio']
+2025-09-23 01:23:53,505 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:23:53,505 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:23:53,505 - strategy_layer.strategy_base.MLRandomForest - INFO - 🔄 Processing data sequentially for causality...
+2025-09-23 01:25:22,786 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:25:22,786 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:25:22,786 - strategy_layer.strategy_base.MLRandomForest - INFO - ✅ Causal feature engineering completed. Shape: (3480, 71)
+2025-09-23 01:25:22,787 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:25:22,787 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:25:22,787 - strategy_layer.strategy_base.MLRandomForest - INFO - 📊 Selecting 54 core features from dataframe
+2025-09-23 01:25:22,787 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:25:22,787 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:25:22,787 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 Core features: ['rsi_7', 'atr_7', 'sma_20_slope', 'macd_hist', 'volume_ratio_10', 'spy_returns', 'price_to_sma_20', 'regime_bull', 'regime_bear', 'regime_neutral', 'volatility_regime', 'relative_strength', 'relative_momentum_3', 'relative_momentum_12', 'momentum_decay_3', 'momentum_decay_6', 'momentum_acceleration_3_6', 'momentum_acceleration_6_12', 'ema_10', 'rsi_4', 'bb_position', 'stoch_k', 'williams_r', 'bollinger_bandwidth_10', 'volatility_ratio_3_10', 'roc_acceleration_3_10', 'roc_acceleration_6_10', 'momentum_decay_12', 'cci_7', 'obv', 'vix_close', 'vix_ma_10', 'vix_regime', 'spy_close', 'qqq_close', 'iwm_close', 'gld_close', 'uso_close', 'yield_spread_20y_2y', 'gold_oil_ratio', 'sector_tech_vs_energy', 'market_breadth', 'ichimoku_tenkan', 'ichimoku_kijun', 'ichimoku_senkou_a', 'ichimoku_senkou_b', 'ichimoku_chikou', 'keltner_upper', 'keltner_lower', 'keltner_position', 'parabolic_sar', 'chaikin_money_flow', 'vwap', 'vwap_deviation']
+2025-09-23 01:25:22,789 - strategy_layer.strategy_base.MLRandomForest - WARNING - No trained model available for MSFT
+2025-09-23 01:25:22,789 - strategy_layer.strategy_base.MLRandomForest - WARNING - No trained model available for MSFT
+2025-09-23 01:25:22,789 - strategy_layer.strategy_base.MLRandomForest - WARNING - No trained model available for MSFT
+2025-09-23 01:25:22,789 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:25:22,789 - TradingApp - INFO - Generated 0 signals from MLRandomForest
+2025-09-23 01:25:22,789 - TradingApp - INFO - Generated 0 signals from MLRandomForest

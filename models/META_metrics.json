@@ -1,0 +1,21 @@
+{
+  "ticker": "META",
+  "training_date": "2025-09-22T23:29:44.167771",
+  "hyperparameters": {
+    "colsample_bytree": 0.9,
+    "learning_rate": 0.2,
+    "max_depth": -1,
+    "min_child_samples": 20,
+    "n_estimators": 200,
+    "num_leaves": 31,
+    "subsample": 0.8
+  },
+  "evaluation_metrics": {
+    "accuracy": 0.44,
+    "precision": 0.44908321946775975,
+    "recall": 0.44,
+    "f1_score": 0.44387249736564804,
+    "roc_auc": 0.38798581844939467
+  },
+  "feature_count": 74
+}

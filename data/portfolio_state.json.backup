@@ -1,0 +1,30 @@
+{
+  "initial_capital": 100000.0,
+  "current_cash": 85000.0,
+  "created_timestamp": 1758559707.3588,
+  "last_saved": 1758561673.406649,
+  "positions": {
+    "AAPL": {
+      "ticker": "AAPL",
+      "quantity": 100,
+      "entry_price": 150.0,
+      "side": "LONG",
+      "entry_timestamp": 1758559707.358894,
+      "stop_loss_price": 0.0,
+      "take_profit_price": 0.0,
+      "status": "OPEN",
+      "current_price": 150.0
+    }
+  },
+  "trade_history": [
+    {
+      "timestamp": 1758559707.358896,
+      "action": "OPEN",
+      "ticker": "AAPL",
+      "quantity": 100,
+      "price": 150.0,
+      "side": "LONG",
+      "value": 15000.0
+    }
+  ]
+}

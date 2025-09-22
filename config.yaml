@@ -1,0 +1,349 @@
+# Advanced Trading Framework Configuration
+# This file contains all configurable parameters for the trading system    rebalance_threshold: 0.05      # 5% deviation triggers rebalance
+
+# Trading Environment Configuration
+trading_environment: "paper"  # "paper" for simulation, "live" for real money trading
+
+# Broker Configuration
+broker:
+  # Broker type: 'paper' for simulation, 'alpaca' for live trading
+  type: "paper"
+  
+  # Paper trading settings (for simulation)
+  paper:
+    initial_cash: 100000.0
+    commission: 0.0          # Commission per trade ($)
+    slippage: 0.001          # Slippage (0.1%)
+  
+  # Alpaca live trading settings (only used if type = 'alpaca')
+  alpaca:
+    api_key: "${ALPACA_API_KEY}"
+    secret_key: "${ALPACA_SECRET_KEY}"
+    base_url: "https://paper-api.alpaca.markets"  # Use paper trading URL
+    timeout: 30
+
+# Strategy Configuration Application Settings
+app:
+  name: "Advanced Trading Framework"
+  version: "1.0.0"
+  debug: false
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# Logging Configuration
+logging:
+  # Log file settings
+  file:
+    enabled: true
+    path: "logs/trading.log"
+    backup_count: 7       # Keep this many backup files (last 7 days)
+    rotation: "midnight"  # Rotate at midnight (daily)
+  
+  # Console logging
+  console:
+    enabled: true
+    level: "INFO"
+  
+  # Log format
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+  # Component-specific log levels
+  components:
+    portfolio: "INFO"
+    broker: "INFO"
+    strategy: "INFO"
+    signals: "DEBUG"
+
+# Data Sources
+data:
+  # Primary data provider
+  provider: "yfinance"  # yfinance, alpaca, manual
+  
+  # Data refresh intervals (in seconds)
+  refresh_intervals:
+    real_time: 60      # Real-time price updates and signal generation
+    daily: 3600        # Daily data refresh
+    model_retrain: 86400  # Model retraining interval
+    risk_monitoring: 30    # Risk management monitoring frequency
+  
+  # Historical data settings
+  historical:
+    default_period: "1y"    # Default lookback period
+    max_period: "5y"        # Maximum historical data
+    min_data_points: 100    # Minimum data points for analysis
+
+# Automation Settings
+automation:
+  # Trading automation
+  enabled: false              # Enable/disable automated trading
+  trading_interval: 60        # Seconds between trading loop iterations
+  risk_monitoring_interval: 30  # Seconds between risk monitoring checks
+  
+  # Safety limits
+  max_trades_per_hour: 10     # Maximum trades per hour
+  max_daily_trades: 50        # Maximum trades per day
+  circuit_breaker_loss: 0.1   # Stop trading if daily loss exceeds 10%
+  
+  # Error handling
+  retry_attempts: 3           # Number of retries for failed operations
+  error_cooldown: 300         # Seconds to wait after errors before retrying
+
+# Portfolio Configuration
+portfolio:
+  # Initial settings
+  initial_cash: 100000.0
+  currency: "USD"
+  
+  # Position sizing
+  max_position_size: 0.0001   # Max 0.01% of portfolio per position ($10 max)
+  min_position_size: 0.00001  # Min 0.001% of portfolio per position ($1 min)
+  max_positions: 10           # Maximum number of positions (reduced for testing)
+  
+  # Risk management
+  max_daily_loss: 0.0001      # Max 0.01% daily loss ($10 max daily loss)
+  max_drawdown: 0.001         # Max 0.1% drawdown ($100 max drawdown)
+  stop_loss_default: 0.05     # Default 5% stop loss
+  take_profit_default: 0.1    # Default 10% take profit
+  
+  # Portfolio rebalancing
+  rebalance_enabled: false
+  rebalance_frequency: "daily"  # daily, weekly, monthly
+  rebalance_threshold: 0.05      # 5% deviation triggers rebalance
+
+# Strategy Configuration
+strategy:
+  # Strategy selection
+  active_strategies:
+    - "MLRandomForestStrategy"
+  
+  # Global strategy settings
+  confidence_threshold: 0.3
+  signal_cooldown: 300      # Seconds between signals for same ticker
+  max_signals_per_hour: 60
+  
+  # Strategy-specific configurations
+  ml_random_forest:
+    # Model parameters
+    confidence_threshold: 0.3
+    lookback_period: 1250        # Days of data for features (5 years)
+    min_accuracy: 0.65         # Minimum model accuracy
+    min_f1_threshold: 0.4       # Minimum F1 score threshold (0.4 for realistic baseline)
+    retrain_frequency: 1      # Days between retraining
+    
+    # Feature engineering
+    technical_indicators:
+      - "sma_5"
+      - "sma_10" 
+      - "sma_20"
+      - "rsi"
+      - "macd"
+      - "macd_signal"
+      - "bb_upper"
+      - "bb_lower"
+      - "bb_width"
+      - "volume_ratio"
+      - "price_change_1d"
+      - "price_change_5d"
+      - "volatility"
+      - "momentum"
+    
+    # Model parameters
+    model_params:
+      n_estimators: 100
+      max_depth: 10
+      min_samples_split: 5
+      min_samples_leaf: 2
+      random_state: 42
+    
+    # Data requirements
+    min_training_samples: 50
+    test_size: 0.2
+
+  ml_lgbm:
+    # Model parameters
+    confidence_threshold: 0.3
+    lookback_period: 1250        # Days of data for features (5 years)
+    min_accuracy: 0.65         # Minimum model accuracy
+    min_f1_threshold: 0.4       # Minimum F1 score threshold (0.4 for realistic baseline)
+    retrain_frequency: 1      # Days between retraining
+    
+    # Feature engineering (same as RandomForest for fair comparison)
+    technical_indicators:
+      - "sma_5"
+      - "sma_10" 
+      - "sma_20"
+      - "rsi"
+      - "macd"
+      - "macd_signal"
+      - "bb_upper"
+      - "bb_lower"
+      - "bb_width"
+      - "volume_ratio"
+      - "price_change_1d"
+      - "price_change_5d"
+      - "volatility"
+      - "momentum"
+    
+    # Model parameters (LightGBM specific)
+    model_params:
+      n_estimators: 100
+      learning_rate: 0.1
+      num_leaves: 31
+      max_depth: 10
+      min_child_samples: 20
+      subsample: 0.8
+      colsample_bytree: 0.8
+      random_state: 42
+    
+    # Data requirements
+    min_training_samples: 50
+    test_size: 0.2
+
+# Trading Universe
+universe:
+  # Default tickers to analyze
+  default_tickers:
+    - "AAPL"
+    - "MSFT" 
+
+
+
+  # Ticker filtering
+  filters:
+    min_market_cap: 1000000000  # $1B minimum market cap
+    min_volume: 1000000         # Minimum daily volume
+    max_price: 1000             # Maximum stock price
+    min_price: 1               # Minimum stock price
+    sectors: []                 # Empty = all sectors
+    exclude_tickers: []         # Tickers to exclude
+
+# Risk Management
+risk:
+  # Portfolio-level risk
+  max_portfolio_risk: 0.15      # Maximum portfolio volatility
+  var_confidence: 0.95          # VaR confidence level
+  expected_return: 0.1          # Expected annual return
+  
+  # Position-level risk
+  position_limits:
+    max_weight: 0.1             # Max 10% per position
+    max_sector_weight: 0.3      # Max 30% per sector
+    max_correlation: 0.7        # Max correlation between positions
+  
+  # Stop-loss and take-profit
+  stop_loss:
+    enabled: true
+    default_percent: 0.05       # 5% stop loss
+    trailing_enabled: true
+    trailing_percent: 0.03      # 3% trailing stop
+  
+  take_profit:
+    enabled: true
+    default_percent: 0.1        # 10% take profit
+    partial_profit: 0.5         # Take 50% profit at target
+
+# User Interface (Streamlit)
+ui:
+  # App configuration
+  page_title: "Advanced Trading Framework"
+  page_icon: "📈"
+  layout: "wide"
+  initial_sidebar_state: "expanded"
+  
+  # Update frequencies (seconds)
+  refresh_rates:
+    portfolio: 30
+    signals: 60
+    market_data: 30
+    performance: 300
+  
+  # Display settings
+  charts:
+    default_period: "1mo"
+    indicators_enabled: true
+    volume_enabled: true
+    theme: "plotly_white"
+  
+  # Data tables
+  tables:
+    max_rows: 100
+    date_format: "%Y-%m-%d %H:%M:%S"
+    currency_format: "$,.2f"
+    percent_format: "{:.2%}"
+
+# Performance & Monitoring
+performance:
+  # Metrics calculation
+  benchmark: "SPY"              # Benchmark ticker
+  risk_free_rate: 0.02          # Annual risk-free rate
+  
+  # Performance reporting
+  reports:
+    enabled: true
+    frequency: "daily"          # daily, weekly, monthly
+    email_enabled: false
+    save_to_file: true
+    format: "json"              # json, csv, html
+  
+  # Alerting
+  alerts:
+    enabled: true
+    channels: ["console"]       # console, email, webhook
+    triggers:
+      daily_loss: 0.05          # Alert if daily loss > 5%
+      drawdown: 0.1             # Alert if drawdown > 10%
+      position_loss: 0.1        # Alert if position loss > 10%
+
+# Storage & Persistence
+storage:
+  # Data directories
+  data_dir: "data"
+  models_dir: "models"
+  logs_dir: "logs"
+  reports_dir: "reports"
+  
+  # File formats
+  portfolio_format: "json"
+  signals_format: "json"
+  performance_format: "json"
+  
+  # Backup settings
+  backup_enabled: true
+  backup_frequency: "daily"
+  backup_retention_days: 30
+
+# Environment Variables
+# These can be overridden by setting environment variables
+environment:
+  # API Keys (use environment variables)
+  alpaca_api_key: "${ALPACA_API_KEY}"
+  alpaca_secret_key: "${ALPACA_SECRET_KEY}"
+  
+  # Database connections
+  database_url: "${DATABASE_URL}"
+  redis_url: "${REDIS_URL}"
+  
+  # External services
+  email_smtp_server: "${EMAIL_SMTP_SERVER}"
+  email_username: "${EMAIL_USERNAME}"
+  email_password: "${EMAIL_PASSWORD}"
+  webhook_url: "${WEBHOOK_URL}"
+
+# Development & Testing
+development:
+  # Debug settings
+  debug_mode: false
+  verbose_logging: false
+  save_debug_data: false
+  
+  # Testing
+  test_mode: false
+  mock_data: false
+  simulation_speed: 1.0         # 1.0 = real-time, >1.0 = faster
+  
+  # Feature flags
+  features:
+    enable_live_trading: false
+    enable_options: false
+    enable_crypto: false
+    enable_forex: false
+    enable_backtesting: true
