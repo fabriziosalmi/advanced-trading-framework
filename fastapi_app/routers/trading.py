@@ -301,11 +301,22 @@ async def emergency_stop(portfolio: Portfolio = Depends(get_portfolio)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/status")
-async def get_trading_status():
-    """Get current trading status and settings."""
+@router.post("/mode")
+async def set_trading_mode(mode: str):
+    """Set trading mode (manual or automatic)."""
     try:
         global _trading_state
-        return _trading_state
+
+        if mode not in ["manual", "automatic"]:
+            raise HTTPException(status_code=400, detail="Mode must be 'manual' or 'automatic'")
+
+        _trading_state["mode"] = mode
+
+        return {
+            "message": f"Trading mode set to {mode}",
+            "mode": mode
+        }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

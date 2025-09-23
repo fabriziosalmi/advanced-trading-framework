@@ -9,10 +9,14 @@ from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from fastapi import WebSocket, WebSocketDisconnect
 import uvicorn
 import os
 import sys
 from pathlib import Path
+from typing import List, Any
+from datetime import datetime
+import asyncio
 
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
@@ -23,10 +27,15 @@ from fastapi_app.routers import (
     strategies,
     monitoring,
     backtesting,
-    data
+    data,
+    watchlist,
+    dashboard
 )
 from fastapi_app.models.responses import HealthResponse
 from core.config_validator import validate_configuration
+
+# Global WebSocket connections for real-time updates
+active_connections: List[WebSocket] = []
 
 app = FastAPI(
     title="Advanced Trading Framework API",
@@ -53,9 +62,51 @@ app.include_router(strategies.router, prefix="/api/strategies", tags=["Strategie
 app.include_router(monitoring.router, prefix="/api/monitoring", tags=["Monitoring"])
 app.include_router(backtesting.router, prefix="/api/backtesting", tags=["Backtesting"])
 app.include_router(data.router, prefix="/api/data", tags=["Market Data"])
+app.include_router(watchlist.router, prefix="/api/watchlist", tags=["Watchlist"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
 
 # Serve static files (frontend)
 app.mount("/static", StaticFiles(directory="fastapi_app/static"), name="static")
+app.mount("/static/models", StaticFiles(directory="models"), name="models")
+
+@app.websocket("/ws/updates")
+async def websocket_updates(websocket: WebSocket):
+    """WebSocket endpoint for real-time dashboard updates."""
+    await websocket.accept()
+    active_connections.append(websocket)
+
+    try:
+        # Send initial system status
+        from fastapi_app.routers.trading import _trading_state
+        await websocket.send_json({
+            "event": "system_status",
+            "data": "Running" if _trading_state.get("is_running", False) else "Stopped",
+            "timestamp": datetime.now().isoformat()
+        })
+
+        # Keep connection alive and send periodic updates
+        while True:
+            await asyncio.sleep(5)  # Update every 5 seconds
+
+            # Send system status updates
+            await websocket.send_json({
+                "event": "system_status",
+                "data": "Running" if _trading_state.get("is_running", False) else "Stopped",
+                "timestamp": datetime.now().isoformat()
+            })
+
+            # Send P&L updates (simplified - would track actual daily P&L)
+            await websocket.send_json({
+                "event": "pnl_update",
+                "data": 0.0,  # Placeholder
+                "timestamp": datetime.now().isoformat()
+            })
+
+    except WebSocketDisconnect:
+        active_connections.remove(websocket)
+    except Exception as e:
+        if websocket in active_connections:
+            active_connections.remove(websocket)
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():

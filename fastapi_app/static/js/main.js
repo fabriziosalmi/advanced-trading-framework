@@ -713,7 +713,7 @@ class TradingFrameworkUI {
     async loadPerformanceData() {
         try {
             // Try to load from API first
-            const performance = await this.apiCall('/performance');
+            const performance = await this.apiCall('/monitoring/performance');
             this.updatePerformanceMetrics(performance);
             this.populatePerformanceTable(performance.trades || []);
             this.initializePerformanceCharts(performance);
@@ -781,7 +781,7 @@ class TradingFrameworkUI {
     async loadLogsData() {
         try {
             // Try to load from API first
-            const logs = await this.apiCall('/logs');
+            const logs = await this.apiCall('/monitoring/logs');
             this.populateLogEntries(logs.entries || []);
         } catch (error) {
             console.warn('Logs API not available, using mock data');
@@ -909,7 +909,7 @@ class TradingFrameworkUI {
     async loadWatchlistData() {
         try {
             // Try to load from API first
-            const watchlist = await this.apiCall('/watchlist');
+            const watchlist = await this.apiCall('/api/watchlist');
             this.populateWatchlistTable(watchlist.symbols || []);
         } catch (error) {
             console.warn('Watchlist API not available, using mock data');
