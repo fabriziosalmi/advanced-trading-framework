@@ -595,6 +595,8 @@ class TradingApp:
                         self.logger.info(f"Initialized strategy: {strategy_name}")
                     else:
                         self.logger.warning(f"Failed to initialize strategy: {strategy_name}")
+                        # Clean up resources if initialization failed
+                        strategy.cleanup()
             
             if not self.strategies:
                 st.warning("No strategies initialized")
@@ -1056,6 +1058,14 @@ class TradingApp:
 
         # Stop monitoring tasks
         await self.stop_monitoring()
+
+        # Clean up strategies
+        for strategy in self.strategies:
+            try:
+                strategy.cleanup()
+                self.logger.info(f"Cleaned up strategy: {strategy.name}")
+            except Exception as e:
+                self.logger.error(f"Error cleaning up strategy {strategy.name}: {e}")
 
         # Cancel any remaining tasks
         tasks_to_cancel = []
