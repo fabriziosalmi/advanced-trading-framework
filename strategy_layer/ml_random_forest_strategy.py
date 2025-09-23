@@ -193,7 +193,7 @@ class MLRandomForestStrategy(Strategy):
             'regime_cache_size': len(self._regime_cache)
         }
     
-    def cleanup(self):
+    async def cleanup(self):
         """Clean up resources and shutdown thread pool."""
         if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)
@@ -224,10 +224,6 @@ class MLRandomForestStrategy(Strategy):
         
         if expired_tickers:
             self.logger.debug(f"Cleaned up {len(expired_tickers)} expired cache entries")
-    
-    def __del__(self):
-        """Ensure cleanup is called when object is destroyed."""
-        self.cleanup()
     
     async def initialize(self) -> bool:
         """Initialize ML strategy components."""
@@ -352,7 +348,7 @@ class MLRandomForestStrategy(Strategy):
                 # Merge extended data with main ticker data
                 data = data.join(extended_data, how='left')
                 # Forward fill missing values to handle weekends/holidays
-                data = data.fillna(method='ffill')
+                data = data.ffill()
                 self.logger.info(f"✅ Extended market data merged: {len(extended_data.columns)} additional columns")
             
             self.logger.info(f"Fetched {len(data)} data points for {ticker} with {len(data.columns)} columns")
@@ -464,7 +460,7 @@ class MLRandomForestStrategy(Strategy):
             # Calculate market breadth indicators
             if 'SPY_close' in extended_data.columns:
                 # Simple market breadth: SPY returns
-                extended_data['SPY_returns'] = extended_data['SPY_close'].pct_change()
+                extended_data['SPY_returns'] = extended_data['SPY_close'].pct_change(fill_method=None)
             
             # Calculate yield spreads if we have Treasury data
             if 'TLT_close' in extended_data.columns and 'SHY_close' in extended_data.columns:
@@ -749,7 +745,7 @@ class MLRandomForestStrategy(Strategy):
             # Volatility Ratio (3-hour vs 10-hour, optimized for hourly data)
             if i >= 9:
                 # Calculate returns
-                returns = current_data['close'].pct_change()
+                returns = current_data['close'].pct_change(fill_method=None)
                 
                 # Short-term volatility (3-hour)
                 vol_3 = returns.tail(3).std()
@@ -1173,7 +1169,7 @@ class MLRandomForestStrategy(Strategy):
             
             # Calculate market features
             spy_data['spy_close'] = spy_data['Close']
-            spy_data['spy_returns'] = spy_data['spy_close'].pct_change()
+            spy_data['spy_returns'] = spy_data['spy_close'].pct_change(fill_method=None)
             spy_data['spy_volatility'] = spy_data['spy_returns'].rolling(20).std() * np.sqrt(252)
             
             # Keep only needed columns
@@ -1912,22 +1908,54 @@ class MLRandomForestStrategy(Strategy):
             return f"ML model predicts {direction} movement with {confidence:.1%} confidence."
     
     @graceful_degradation(fallback_value=[], log_warning=True)
-    async def generate_signals(self, tickers: List[str]) -> List[TradingSignal]:
+    async def generate_signals(self, *args, **kwargs) -> List[TradingSignal]:
         """
         Generate trading signals for given tickers using ML model.
 
+        Supports multiple calling patterns:
+        - generate_signals(tickers: List[str]) - for TradingApp
+        - generate_signals(data: Dict[str, pd.DataFrame], portfolio: Dict, cash: float) - for backtesting
+
         Args:
-            tickers: List of ticker symbols to analyze
+            *args: Variable arguments depending on calling pattern
+            **kwargs: Variable keyword arguments
 
         Returns:
             List of TradingSignal objects
         """
+        # Handle different calling patterns
+        if len(args) == 1 and isinstance(args[0], list):
+            # TradingApp pattern: generate_signals(tickers)
+            tickers = args[0]
+            # For TradingApp, we need to fetch data ourselves
+            data_dict = {}
+            for ticker in tickers:
+                data = await self._get_market_data(ticker)
+                if data is not None and not data.empty:
+                    data_dict[ticker] = data
+            portfolio = self.portfolio  # Use internal portfolio
+            cash = self.portfolio.current_cash if hasattr(self.portfolio, 'current_cash') else 100000.0
+        elif len(args) >= 2:
+            # Backtesting pattern: generate_signals(data, portfolio, cash)
+            data_dict = args[0] if isinstance(args[0], dict) else {}
+            portfolio = args[1] if len(args) > 1 else self.portfolio
+            cash = args[2] if len(args) > 2 else (self.portfolio.current_cash if hasattr(self.portfolio, 'current_cash') else 100000.0)
+            tickers = list(data_dict.keys())
+        else:
+            self.logger.warning("Unsupported generate_signals calling pattern")
+            return []
+
         signals = []
 
         for ticker in tickers:
             try:
-                # Get market data
-                data = await self._get_market_data(ticker)
+                # Get data for this ticker
+                if ticker in data_dict:
+                    data = data_dict[ticker]
+                else:
+                    # Fallback: fetch data if not provided
+                    data = await self._get_market_data(ticker)
+
                 if data is None or data.empty:
                     continue
 
@@ -1954,7 +1982,7 @@ class MLRandomForestStrategy(Strategy):
                     model = self.models[ticker]
                     prediction = model.predict_proba(latest_features)[0]
                     confidence = prediction[1]  # Probability of positive class (BUY)
-                    
+
                     self.logger.info(f"🎯 {ticker} prediction confidence: {confidence:.4f} (threshold: {self.confidence_threshold})")
 
                 # Get current price
@@ -1964,21 +1992,14 @@ class MLRandomForestStrategy(Strategy):
                 if confidence >= self.confidence_threshold:
                     self.logger.info(f"✅ {ticker} confidence meets threshold, calculating position size")
                     # Calculate position size based on confidence and risk management
-                    # Use Kelly criterion or simple percentage-based sizing
-                    portfolio_value = self.portfolio.current_cash + self.portfolio.calculate_total_equity()
-                    risk_per_trade = 0.01  # 1% risk per trade
-                    stop_loss_pct = 0.05   # 5% stop loss
-                    
-                    # Calculate position size: (Portfolio Value * Risk per Trade) / (Price * Stop Loss %)
-                    position_size = int((portfolio_value * risk_per_trade) / (current_price * stop_loss_pct))
-                    
-                    # Adjust position size based on confidence (higher confidence = larger position)
-                    confidence_multiplier = min(confidence * 2, 1.5)  # Max 1.5x multiplier
-                    position_size = int(position_size * confidence_multiplier)
-                    
-                    # Ensure minimum position size
-                    position_size = max(position_size, 1)
-                    
+                    position_size = self.calculate_position_size(
+                        ticker=ticker,
+                        current_price=current_price,
+                        confidence=confidence,
+                        portfolio_value=cash + sum(getattr(pos, 'value', 0) for pos in (portfolio.positions.values() if hasattr(portfolio, 'positions') else portfolio.get('positions', {}).values())),
+                        risk_per_trade=0.01  # 1% risk per trade
+                    )
+
                     self.logger.info(f"📊 {ticker} calculated position size: {position_size}")
 
                     if position_size > 0:
@@ -1989,11 +2010,11 @@ class MLRandomForestStrategy(Strategy):
                         stop_loss_pct, take_profit_pct = self._calculate_stop_levels(
                             data, 'buy', regime, risk_metrics
                         )
-                        
+
                         # Calculate actual price levels
                         stop_loss_price = round(current_price * (1 - stop_loss_pct), 2)
                         take_profit_price = round(current_price * (1 + take_profit_pct), 2)
-                        
+
                         signal = TradingSignal(
                             ticker=ticker,
                             action='BUY',
@@ -2013,7 +2034,49 @@ class MLRandomForestStrategy(Strategy):
 
         return signals
 
-        return signals
+    def calculate_position_size(self, ticker: str, current_price: float, confidence: float,
+                               portfolio_value: float, risk_per_trade: float = 0.01) -> int:
+        """
+        Calculate position size based on risk management and confidence.
+
+        Args:
+            ticker: Stock ticker symbol
+            current_price: Current stock price
+            confidence: ML model confidence (0-1)
+            portfolio_value: Total portfolio value
+            risk_per_trade: Maximum risk per trade as fraction of portfolio
+
+        Returns:
+            Position size in shares
+        """
+        try:
+            # Calculate risk amount
+            risk_amount = portfolio_value * risk_per_trade
+
+            # Use a dynamic stop loss based on volatility (simplified)
+            # In a real implementation, this would use ATR or other volatility measures
+            stop_loss_pct = 0.05  # 5% stop loss
+
+            # Calculate position size: Risk Amount / (Price * Stop Loss %)
+            position_size = int(risk_amount / (current_price * stop_loss_pct))
+
+            # Adjust position size based on confidence (higher confidence = larger position)
+            confidence_multiplier = min(confidence * 2, 1.5)  # Max 1.5x multiplier
+            position_size = int(position_size * confidence_multiplier)
+
+            # Ensure minimum position size
+            position_size = max(position_size, 1)
+
+            # Ensure we don't exceed available cash
+            max_position_value = portfolio_value * 0.1  # Max 10% of portfolio per position
+            max_shares = int(max_position_value / current_price)
+            position_size = min(position_size, max_shares)
+
+            return position_size
+
+        except Exception as e:
+            self.logger.error(f"Error calculating position size for {ticker}: {str(e)}")
+            return 1  # Minimum position size
 
     async def _get_market_data(self, ticker: str) -> Optional[pd.DataFrame]:
         """
@@ -2070,13 +2133,11 @@ class MLRandomForestStrategy(Strategy):
     
     # ===== WALK-FORWARD VALIDATION METHODS =====
     
-    async def _fetch_data_async(self, ticker: str) -> Optional[pd.DataFrame]:
+    def _fetch_data_async(self, ticker: str) -> Optional[pd.DataFrame]:
         """
         Async version of _fetch_data for walk-forward validation.
         """
-        return await asyncio.get_event_loop().run_in_executor(
-            self.executor, self._fetch_data, ticker
-        )
+        return self._fetch_data(ticker)
     
     async def _train_fold(self, ticker: str, train_data: pd.DataFrame, test_data: pd.DataFrame, fold_num: int):
         """

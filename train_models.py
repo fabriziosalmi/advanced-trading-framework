@@ -205,7 +205,7 @@ class ModelTrainer:
         try:
             # Fetch all available data for the ticker
             self.logger.info(f"📊 Fetching complete dataset for {ticker}")
-            all_data = await self.strategy._fetch_data_async(ticker)
+            all_data = self.strategy._fetch_data_async(ticker)
             
             if all_data is None or len(all_data) < self.training_window_size + self.testing_period_days:
                 self.logger.warning(f"Insufficient data for walk-forward validation: {len(all_data) if all_data else 0} rows")

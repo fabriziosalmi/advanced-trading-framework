@@ -124,7 +124,7 @@ strategy:
   ml_random_forest:
     # Model parameters
     confidence_threshold: 0.3
-    lookback_period: 1250        # Days of data for features (5 years)
+    lookback_period: 365        # Days of data for features (1 year)
     min_accuracy: 0.65         # Minimum model accuracy
     min_f1_threshold: 0.4       # Minimum F1 score threshold (0.4 for realistic baseline)
     retrain_frequency: 1      # Days between retraining
@@ -161,7 +161,7 @@ strategy:
   ml_lgbm:
     # Model parameters
     confidence_threshold: 0.3
-    lookback_period: 1250        # Days of data for features (5 years)
+    lookback_period: 365        # Days of data for features (1 year)
     min_accuracy: 0.65         # Minimum model accuracy
     min_f1_threshold: 0.4       # Minimum F1 score threshold (0.4 for realistic baseline)
     retrain_frequency: 1      # Days between retraining
