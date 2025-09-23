@@ -5,3 +5,5 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+logs/trading.log
+.vscode/settings.json
