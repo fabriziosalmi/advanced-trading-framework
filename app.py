@@ -703,13 +703,18 @@ class TradingApp:
                             
                             order_id = await self.broker.submit_order(order)
                             if order_id:
-                                # Calculate stop loss and take profit
-                                risk_config = self.config.get('portfolio', {})
-                                stop_loss_pct = risk_config.get('stop_loss_default', 0.05)
-                                take_profit_pct = risk_config.get('take_profit_default', 0.1)
+                                # Use stop loss and take profit from signal, or fall back to defaults
+                                stop_loss_price = signal.stop_loss
+                                take_profit_price = signal.take_profit
                                 
-                                stop_loss_price = signal.price * (1 - stop_loss_pct)
-                                take_profit_price = signal.price * (1 + take_profit_pct)
+                                if stop_loss_price is None or take_profit_price is None:
+                                    # Fall back to config defaults if signal doesn't have stop levels
+                                    risk_config = self.config.get('portfolio', {})
+                                    stop_loss_pct = risk_config.get('stop_loss_default', 0.05)
+                                    take_profit_pct = risk_config.get('take_profit_default', 0.1)
+                                    
+                                    stop_loss_price = signal.price * (1 - stop_loss_pct)
+                                    take_profit_price = signal.price * (1 + take_profit_pct)
                                 
                                 # Update portfolio to reflect new position
                                 self.portfolio.open_position(

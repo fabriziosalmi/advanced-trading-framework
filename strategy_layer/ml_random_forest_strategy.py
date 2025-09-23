@@ -97,6 +97,7 @@ class MLRandomForestStrategy(Strategy):
         # Data cache with thread-safe access (using regular dict instead of WeakValueDictionary for thread safety)
         self.data_cache: Dict[str, Any] = {}
         self.data_cache_lock = threading.RLock()  # Reentrant lock for thread safety
+        self.model_lock = threading.RLock()  # Lock for model loading/saving operations
         self.last_data_update: Dict[str, datetime] = {}
         
         # Thread pool for CPU-intensive operations
@@ -1400,14 +1401,15 @@ class MLRandomForestStrategy(Strategy):
             # Only save if model meets minimum performance criteria (unless skip check)
             min_f1_threshold = self.config.get('strategy', {}).get('ml_random_forest', {}).get('min_f1_threshold', 0.4)  # Default to 0.4 for realistic baseline
             if skip_performance_check or evaluation_metrics['f1_score'] > min_f1_threshold:
-                # Store model and scaler
-                self.models[ticker] = final_model
-                self.scalers[ticker] = scaler
-                
-                # Save to disk
-                model_path, scaler_path = self._get_model_path(ticker)
-                joblib.dump(final_model, model_path)
-                joblib.dump(scaler, scaler_path)
+                # Store model and scaler with thread safety
+                with self.model_lock:
+                    self.models[ticker] = final_model
+                    self.scalers[ticker] = scaler
+                    
+                    # Save to disk
+                    model_path, scaler_path = self._get_model_path(ticker)
+                    joblib.dump(final_model, model_path)
+                    joblib.dump(scaler, scaler_path)
                 
                 # Cache the processed data
                 with self.data_cache_lock:
@@ -1562,21 +1564,22 @@ class MLRandomForestStrategy(Strategy):
         Returns:
             True if model loaded successfully, False otherwise
         """
-        try:
-            model_path, scaler_path = self._get_model_path(ticker)
-            
-            if not os.path.exists(model_path) or not os.path.exists(scaler_path):
+        with self.model_lock:
+            try:
+                model_path, scaler_path = self._get_model_path(ticker)
+                
+                if not os.path.exists(model_path) or not os.path.exists(scaler_path):
+                    return False
+                
+                self.models[ticker] = joblib.load(model_path)
+                self.scalers[ticker] = joblib.load(scaler_path)
+                
+                self.logger.info(f"Model loaded for {ticker}")
+                return True
+                
+            except Exception as e:
+                self.logger.error(f"Failed to load model for {ticker}: {str(e)}")
                 return False
-            
-            self.models[ticker] = joblib.load(model_path)
-            self.scalers[ticker] = joblib.load(scaler_path)
-            
-            self.logger.info(f"Model loaded for {ticker}")
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Failed to load model for {ticker}: {str(e)}")
-            return False
     
     def _get_latest_features(self, ticker: str) -> Optional[pd.DataFrame]:
         """
@@ -1936,18 +1939,19 @@ class MLRandomForestStrategy(Strategy):
                 if features is None or features.empty:
                     continue
 
-                # Check if model exists for this ticker
-                if ticker not in self.models:
-                    self.logger.warning(f"No trained model available for {ticker}")
-                    continue
+                # Check if model exists for this ticker and make prediction with thread safety
+                with self.model_lock:
+                    if ticker not in self.models:
+                        self.logger.warning(f"No trained model available for {ticker}")
+                        continue
 
-                # Get latest feature values
-                latest_features = features.iloc[-1:].values
+                    # Get latest feature values
+                    latest_features = features.iloc[-1:].values
 
-                # Make prediction
-                model = self.models[ticker]
-                prediction = model.predict_proba(latest_features)[0]
-                confidence = prediction[1]  # Probability of positive class (BUY)
+                    # Make prediction
+                    model = self.models[ticker]
+                    prediction = model.predict_proba(latest_features)[0]
+                    confidence = prediction[1]  # Probability of positive class (BUY)
 
                 # Get current price
                 current_price = data.iloc[-1]['close']
@@ -1960,12 +1964,25 @@ class MLRandomForestStrategy(Strategy):
                     )
 
                     if position_size > 0:
+                        # Calculate stop loss and take profit levels
+                        regime = self._detect_market_regime(data)
+                        risk_metrics = self._calculate_risk_metrics(data)
+                        stop_loss_pct, take_profit_pct = self._calculate_stop_levels(
+                            data, 'buy', regime, risk_metrics
+                        )
+                        
+                        # Calculate actual price levels
+                        stop_loss_price = round(current_price * (1 - stop_loss_pct), 2)
+                        take_profit_price = round(current_price * (1 + take_profit_pct), 2)
+                        
                         signal = TradingSignal(
                             symbol=ticker,
                             side='BUY',
                             quantity=position_size,
                             price=current_price,
                             confidence=confidence,
+                            stop_loss=stop_loss_price,
+                            take_profit=take_profit_price,
                             timestamp=datetime.now(),
                             strategy_name=self.name
                         )
@@ -2007,11 +2024,12 @@ class MLRandomForestStrategy(Strategy):
         Returns:
             Dictionary with model information or None
         """
-        if ticker not in self.models:
-            return None
-        
-        model = self.models[ticker]
-        model_path, _ = self._get_model_path(ticker)
+        with self.model_lock:
+            if ticker not in self.models:
+                return None
+            
+            model = self.models[ticker]
+            model_path, _ = self._get_model_path(ticker)
         
         # Get model file stats
         model_stats = {}

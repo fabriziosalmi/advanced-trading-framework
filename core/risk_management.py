@@ -114,6 +114,9 @@ class PortfolioOptimizer:
     def _equal_weight_allocation(self, returns: pd.DataFrame) -> PortfolioAllocation:
         """Equal weight allocation across all assets."""
         n_assets = len(returns.columns)
+        if n_assets == 0:
+            raise ValueError("Cannot allocate portfolio with no assets")
+        
         weights = {asset: 1.0 / n_assets for asset in returns.columns}
 
         expected_return, volatility = self._calculate_portfolio_stats(returns, weights)
@@ -127,10 +130,13 @@ class PortfolioOptimizer:
 
     def _min_variance_allocation(self, returns: pd.DataFrame) -> PortfolioAllocation:
         """Minimum variance portfolio optimization."""
+        n_assets = len(returns.columns)
+        if n_assets == 0:
+            raise ValueError("Cannot allocate portfolio with no assets")
+        
         def objective(weights):
             return self._calculate_portfolio_stats(returns, dict(zip(returns.columns, weights)))[1] ** 2
 
-        n_assets = len(returns.columns)
         constraints = [
             {'type': 'eq', 'fun': lambda x: np.sum(x) - 1},  # Weights sum to 1
         ]
@@ -159,10 +165,14 @@ class PortfolioOptimizer:
         """Risk parity allocation - equal risk contribution from each asset."""
         cov_matrix = returns.cov().values
         n_assets = len(returns.columns)
+        if n_assets == 0:
+            raise ValueError("Cannot allocate portfolio with no assets")
 
         def objective(weights):
             # Risk contribution of each asset
             portfolio_vol = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
+            if portfolio_vol == 0:
+                return 0  # No volatility, all weights are equal
             risk_contributions = weights * (np.dot(cov_matrix, weights)) / portfolio_vol
             # Target equal risk contribution
             target = portfolio_vol / n_assets
@@ -192,6 +202,10 @@ class PortfolioOptimizer:
 
     def _efficient_frontier_allocation(self, returns: pd.DataFrame, target_return: Optional[float] = None) -> PortfolioAllocation:
         """Efficient frontier portfolio optimization."""
+        n_assets = len(returns.columns)
+        if n_assets == 0:
+            raise ValueError("Cannot allocate portfolio with no assets")
+        
         if target_return is None:
             # Maximize Sharpe ratio
             def objective(weights):
@@ -211,7 +225,6 @@ class PortfolioOptimizer:
                 {'type': 'eq', 'fun': lambda x: self._calculate_portfolio_stats(returns, dict(zip(returns.columns, weights)))[0] - target_return},
             ]
 
-        n_assets = len(returns.columns)
         bounds = [(self.min_weight, self.max_weight) for _ in range(n_assets)]
         x0 = np.array([1.0 / n_assets] * n_assets)
 
@@ -519,6 +532,8 @@ class StressTester:
         """Calculate maximum drawdown from returns series."""
         cumulative = (1 + returns).cumprod()
         running_max = cumulative.expanding().max()
+        if running_max.min() == 0:
+            return 0.0  # Avoid division by zero
         drawdown = (cumulative - running_max) / running_max
         return drawdown.min()
 
@@ -663,8 +678,11 @@ class RiskManager:
         # Maximum drawdown
         cumulative = (1 + portfolio_returns).cumprod()
         running_max = cumulative.expanding().max()
-        drawdown = (cumulative - running_max) / running_max
-        max_drawdown = drawdown.min()
+        if running_max.min() == 0:
+            max_drawdown = 0.0
+        else:
+            drawdown = (cumulative - running_max) / running_max
+            max_drawdown = drawdown.min()
 
         # Calmar ratio
         calmar_ratio = expected_return / abs(max_drawdown) if max_drawdown != 0 else 0

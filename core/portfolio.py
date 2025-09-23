@@ -197,12 +197,12 @@ class Portfolio:
         
         # Calculate realized P&L
         if position.side == 'LONG':
-            realized_pl = (exit_price - position.entry_price) * position.quantity
+            realized_pl = round((exit_price - position.entry_price) * position.quantity, 2)
         else:  # SHORT
-            realized_pl = (position.entry_price - exit_price) * abs(position.quantity)
+            realized_pl = round((position.entry_price - exit_price) * abs(position.quantity), 2)
         
         # Calculate exit value
-        exit_value = abs(position.quantity) * exit_price
+        exit_value = round(abs(position.quantity) * exit_price, 2)
         
         # Update cash balance
         if position.side == 'LONG':
@@ -279,7 +279,7 @@ class Portfolio:
             Total portfolio value in dollars
         """
         positions_value = sum(pos.current_value for pos in self.positions.values())
-        return self.current_cash + positions_value
+        return round(self.current_cash + positions_value, 2)
     
     def calculate_total_pl(self) -> float:
         """
@@ -288,7 +288,7 @@ class Portfolio:
         Returns:
             Total unrealized profit/loss in dollars
         """
-        return sum(pos.unrealized_pl for pos in self.positions.values())
+        return round(sum(pos.unrealized_pl for pos in self.positions.values()), 2)
     
     def calculate_total_pl_pct(self) -> float:
         """
@@ -300,7 +300,7 @@ class Portfolio:
         current_equity = self.calculate_total_equity()
         if self.initial_capital == 0:
             return 0.0  # Avoid division by zero
-        return ((current_equity - self.initial_capital) / self.initial_capital) * 100.0
+        return round(((current_equity - self.initial_capital) / self.initial_capital) * 100.0, 4)
     
     def get_portfolio_summary(self) -> Dict:
         """

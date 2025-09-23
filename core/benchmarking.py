@@ -262,9 +262,13 @@ class BenchmarkProvider:
             Peer group benchmark series
         """
         if weighting == 'equal':
+            if not peer_symbols:
+                raise ValueError("Peer symbols list cannot be empty")
             weights = {symbol: 1.0 / len(peer_symbols) for symbol in peer_symbols}
         elif weighting == 'market_cap':
             # Simplified market cap weighting (would need actual market cap data)
+            if not peer_symbols:
+                raise ValueError("Peer symbols list cannot be empty")
             weights = {symbol: 1.0 / len(peer_symbols) for symbol in peer_symbols}
             self.logger.warning("Market cap weighting not fully implemented, using equal weights")
         else:

@@ -93,7 +93,7 @@ class Position:
         Returns:
             Current market value (quantity * current_price)
         """
-        return abs(self.quantity) * self.current_price
+        return round(abs(self.quantity) * self.current_price, 2)
     
     @property
     def entry_value(self) -> float:
@@ -103,7 +103,7 @@ class Position:
         Returns:
             Entry value (quantity * entry_price)
         """
-        return abs(self.quantity) * self.entry_price
+        return round(abs(self.quantity) * self.entry_price, 2)
     
     @property
     def unrealized_pl(self) -> float:
@@ -119,9 +119,9 @@ class Position:
         price_diff = self.current_price - self.entry_price
         
         if self.side == 'LONG':
-            return price_diff * self.quantity
+            return round(price_diff * self.quantity, 2)
         else:  # SHORT
-            return -price_diff * abs(self.quantity)
+            return round(-price_diff * abs(self.quantity), 2)
     
     @property
     def unrealized_pl_pct(self) -> float:
@@ -134,7 +134,7 @@ class Position:
         if self.entry_value == 0:
             return 0.0
         
-        return (self.unrealized_pl / self.entry_value) * 100.0
+        return round((self.unrealized_pl / self.entry_value) * 100.0, 4)
     
     @property
     def is_profitable(self) -> bool:
