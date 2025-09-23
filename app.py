@@ -3989,6 +3989,885 @@ class TradingApp:
                 'max_trade_duration': 0.0
             }
 
+    def render_header(self):
+        """Render the application header with key metrics."""
+        st.title("📈 Advanced Trading Framework")
+
+        # Key metrics in header
+        if self.portfolio:
+            col1, col2, col3, col4 = st.columns(4)
+
+            current_value = self.portfolio.calculate_total_equity()
+            initial_capital = self.portfolio.initial_capital
+            total_return = ((current_value - initial_capital) / initial_capital) * 100
+
+            with col1:
+                st.metric("Portfolio Value", f"${current_value:,.2f}")
+
+            with col2:
+                delta_color = "normal" if total_return >= 0 else "inverse"
+                st.metric("Total Return", f"{total_return:+.2f}%", delta_color=delta_color)
+
+            with col3:
+                st.metric("Cash Available", f"${self.portfolio.cash:,.2f}")
+
+            with col4:
+                open_positions = len(self.portfolio.get_all_open_positions())
+                st.metric("Open Positions", open_positions)
+
+        st.markdown("---")
+
+    def render_sidebar(self) -> Dict[str, Any]:
+        """Render the sidebar with trading controls and navigation."""
+        with st.sidebar:
+            st.header("🎛️ Trading Controls")
+
+            # Trading Mode Toggle
+            st.subheader("Trading Mode")
+            trading_mode = st.radio(
+                "Select Mode:",
+                ["Manual", "Automatic"],
+                index=1 if self.auto_trading_enabled else 0,
+                help="Manual: You control all trades. Automatic: AI executes trades based on signals."
+            )
+
+            # Update auto trading state
+            new_auto_trading = (trading_mode == "Automatic")
+            if new_auto_trading != self.auto_trading_enabled:
+                self.auto_trading_enabled = new_auto_trading
+                st.session_state.auto_trading_enabled = new_auto_trading
+
+            # Trading Controls
+            st.subheader("Trading Actions")
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                if st.button("▶️ Start Trading", type="primary", use_container_width=True,
+                           disabled=self.auto_trading_enabled and self.trading_loop_task and not self.trading_loop_task.done()):
+                    if not self.initialized:
+                        st.error("Application not initialized")
+                    elif self.auto_trading_enabled:
+                        # Start automated trading
+                        asyncio.run(self.start_automated_trading())
+                        st.success("🤖 Automated trading started!")
+                        st.rerun()
+                    else:
+                        st.info("Manual trading mode - use signal tabs to execute trades")
+
+            with col2:
+                if st.button("⏹️ Stop Trading", type="secondary", use_container_width=True,
+                           disabled=not self.auto_trading_enabled or not (self.trading_loop_task and not self.trading_loop_task.done())):
+                    if self.auto_trading_enabled:
+                        asyncio.run(self.stop_automated_trading())
+                        st.success("🛑 Automated trading stopped!")
+                        st.rerun()
+                    else:
+                        st.info("Manual trading mode - no automated trading to stop")
+
+            # Emergency Controls
+            st.subheader("🚨 Emergency Controls")
+
+            if st.button("🚨 Liquidate All", type="secondary", use_container_width=True,
+                        help="Emergency liquidation of all positions"):
+                if st.session_state.get('confirm_liquidate', False):
+                    with st.spinner("Liquidating all positions..."):
+                        liquidated = asyncio.run(self.liquidate_all_positions())
+                        if liquidated > 0:
+                            st.success(f"✅ Liquidated {liquidated} positions")
+                            st.session_state.confirm_liquidate = False
+                        else:
+                            st.info("No positions to liquidate")
+                        st.rerun()
+                else:
+                    st.warning("⚠️ Click again to confirm liquidation of ALL positions")
+                    st.session_state.confirm_liquidate = True
+
+            # Risk Management
+            st.subheader("🛡️ Risk Management")
+
+            # Stop loss percentage
+            stop_loss_pct = st.slider(
+                "Stop Loss %",
+                min_value=0.1,
+                max_value=10.0,
+                value=5.0,
+                step=0.1,
+                help="Maximum loss percentage per trade"
+            )
+
+            # Take profit percentage
+            take_profit_pct = st.slider(
+                "Take Profit %",
+                min_value=0.1,
+                max_value=20.0,
+                value=10.0,
+                step=0.1,
+                help="Profit target percentage per trade"
+            )
+
+            # Max positions
+            max_positions = st.slider(
+                "Max Open Positions",
+                min_value=1,
+                max_value=20,
+                value=5,
+                help="Maximum number of concurrent positions"
+            )
+
+            # System Status
+            st.subheader("📊 System Status")
+
+            status_col1, status_col2 = st.columns(2)
+
+            with status_col1:
+                if self.initialized:
+                    st.success("✅ Initialized")
+                else:
+                    st.error("❌ Not Initialized")
+
+                if self.broker and self.broker.connected:
+                    st.success("✅ Broker Connected")
+                else:
+                    st.error("❌ Broker Disconnected")
+
+            with status_col2:
+                if self.strategies:
+                    st.success(f"✅ {len(self.strategies)} Strategies")
+                else:
+                    st.error("❌ No Strategies")
+
+                trading_status = "🟢 Active" if (self.trading_loop_task and not self.trading_loop_task.done()) else "🔴 Inactive"
+                st.write(f"Trading: {trading_status}")
+
+            # Quick Actions
+            st.subheader("⚡ Quick Actions")
+
+            if st.button("🔄 Refresh Data", use_container_width=True):
+                with st.spinner("Refreshing data..."):
+                    asyncio.run(self.update_portfolio())
+                    st.success("✅ Data refreshed")
+                    st.rerun()
+
+            if st.button("📊 Generate Signals", use_container_width=True):
+                with st.spinner("Generating signals..."):
+                    tickers = self.config.get('universe', {}).get('default_tickers', ['AAPL', 'MSFT'])
+                    signals = asyncio.run(self.generate_signals(tickers))
+                    st.success(f"✅ Generated {len(signals)} signals")
+                    st.rerun()
+
+            # Configuration
+            with st.expander("⚙️ Quick Config"):
+                dark_mode = st.checkbox("Dark Mode", value=st.session_state.get('dark_mode', False))
+                if dark_mode != st.session_state.get('dark_mode', False):
+                    st.session_state.dark_mode = dark_mode
+                    st.rerun()
+
+                # Trading environment indicator
+                trading_env = self.config.get('trading_environment', 'paper')
+                if trading_env == 'live':
+                    st.error("🔴 LIVE TRADING ACTIVE")
+                else:
+                    st.info("🟢 PAPER TRADING MODE")
+
+        return {
+            'trading_mode': trading_mode,
+            'auto_trading': self.auto_trading_enabled,
+            'stop_loss_pct': stop_loss_pct,
+            'take_profit_pct': take_profit_pct,
+            'max_positions': max_positions
+        }
+
+    def render_main_app(self):
+        """Render the main application interface."""
+
+        # Header
+        self.render_header()
+
+        # Live Trading Warning
+        trading_environment = self.config.get('trading_environment', 'paper')
+        if trading_environment == 'live':
+            st.error("🚨 **LIVE TRADING MODE ACTIVE** 🚨")
+            st.error("**WARNING:** This application is currently configured for LIVE TRADING with real money!")
+            st.error("All trades executed will use actual funds. Please ensure you understand the risks.")
+            st.markdown("---")
+
+        # Sidebar
+        controls = self.render_sidebar()
+
+        # Main content area with proper layout
+        main_col1, main_col2 = st.columns([1, 3])  # Sidebar space, main content
+
+        with main_col1:
+            # This column can be used for additional controls or summary
+            st.empty()
+
+        with main_col2:
+            # Main content tabs
+            tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs([
+                "💼 Portfolio",
+                "📡 Signals",
+                "📈 Performance",
+                "📝 Logs",
+                "⚙️ Settings",
+                "🔍 Monitoring",
+                "🔬 Backtesting",
+                "📊 Technical Analysis",
+                "🤖 ML Modeling"
+            ])
+
+            with tab1:
+                self.render_portfolio_tab()
+
+            with tab2:
+                self.render_signals_tab()
+
+            with tab3:
+                self.render_performance_tab()
+
+            with tab4:
+                self.render_logs_tab()
+
+            with tab5:
+                self.render_settings_tab()
+
+            with tab6:
+                self.render_monitoring_tab()
+
+            with tab7:
+                self.render_backtesting_tab()
+
+            with tab8:
+                self.render_technical_analysis_tab()
+
+    async def start_automated_trading(self):
+        """Start the automated trading loop."""
+        if not self.initialized:
+            raise ValueError("Application not initialized")
+
+        if self.trading_loop_task and not self.trading_loop_task.done():
+            self.logger.warning("Automated trading already running")
+            return
+
+        try:
+            self.logger.info("Starting automated trading system")
+
+            # Start trading loop
+            self.trading_loop_task = asyncio.create_task(self.automated_trading_loop())
+
+            # Start risk monitoring
+            self.risk_monitoring_task = asyncio.create_task(self.automated_risk_monitoring_loop())
+
+            self.logger.info("Automated trading system started successfully")
+
+        except Exception as e:
+            self.logger.error(f"Failed to start automated trading: {str(e)}")
+            raise
+
+    async def stop_automated_trading(self):
+        """Stop the automated trading loop."""
+        try:
+            self.logger.info("Stopping automated trading system")
+
+            # Cancel trading tasks
+            if self.trading_loop_task and not self.trading_loop_task.done():
+                self.trading_loop_task.cancel()
+                try:
+                    await self.trading_loop_task
+                except asyncio.CancelledError:
+                    pass
+
+            if self.risk_monitoring_task and not self.risk_monitoring_task.done():
+                self.risk_monitoring_task.cancel()
+                try:
+                    await self.risk_monitoring_task
+                except asyncio.CancelledError:
+                    pass
+
+            self.logger.info("Automated trading system stopped successfully")
+
+        except Exception as e:
+            self.logger.error(f"Error stopping automated trading: {str(e)}")
+
+    async def update_portfolio(self):
+        """Update portfolio data from broker."""
+        try:
+            if not self.portfolio or not self.broker:
+                return
+
+            # Update market prices for open positions
+            open_positions = self.portfolio.get_all_open_positions()
+            for position in open_positions:
+                market_data = await self.broker.get_market_data(position.ticker)
+                if market_data:
+                    self.portfolio.update_position_price(position.ticker, market_data.price)
+
+            # Update portfolio value
+            self.portfolio.record_portfolio_value()
+
+        except Exception as e:
+            self.logger.error(f"Error updating portfolio: {str(e)}")
+
+    def render_portfolio_tab(self):
+        """Render the portfolio overview tab."""
+        st.header("💼 Portfolio Overview")
+
+        if not self.portfolio:
+            st.warning("Portfolio not initialized")
+            return
+
+        # Portfolio Summary
+        st.subheader("Portfolio Summary")
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        current_value = self.portfolio.calculate_total_equity()
+        initial_capital = self.portfolio.initial_capital
+        total_return = ((current_value - initial_capital) / initial_capital) * 100
+
+        with col1:
+            st.metric("Total Value", f"${current_value:,.2f}")
+
+        with col2:
+            delta_color = "normal" if total_return >= 0 else "inverse"
+            st.metric("Total Return", f"{total_return:+.2f}%", delta_color=delta_color)
+
+        with col3:
+            st.metric("Cash", f"${self.portfolio.cash:,.2f}")
+
+        with col4:
+            open_positions = len(self.portfolio.get_all_open_positions())
+            st.metric("Open Positions", open_positions)
+
+        # Current Positions
+        st.subheader("Current Positions")
+
+        open_positions = self.portfolio.get_all_open_positions()
+        if open_positions:
+            positions_data = []
+            for pos in open_positions:
+                positions_data.append({
+                    'Ticker': pos.ticker,
+                    'Quantity': pos.quantity,
+                    'Avg Cost': f"${pos.avg_cost:.2f}",
+                    'Current Price': f"${pos.current_price:.2f}",
+                    'Market Value': f"${pos.current_price * pos.quantity:,.2f}",
+                    'Unrealized P&L': f"${pos.unrealized_pnl:,.2f}",
+                    'Return %': f"{((pos.current_price - pos.avg_cost) / pos.avg_cost) * 100:.2f}%"
+                })
+
+            st.dataframe(pd.DataFrame(positions_data), use_container_width=True)
+        else:
+            st.info("No open positions")
+
+        # Recent Trades
+        st.subheader("Recent Trades")
+
+        if self.portfolio.trade_history:
+            recent_trades = self.portfolio.trade_history[-10:]  # Last 10 trades
+            trades_data = []
+            for trade in recent_trades:
+                trades_data.append({
+                    'Date': trade.get('timestamp', ''),
+                    'Ticker': trade.get('ticker', ''),
+                    'Action': trade.get('action', ''),
+                    'Quantity': trade.get('quantity', 0),
+                    'Price': f"${trade.get('price', 0):.2f}",
+                    'Value': f"${trade.get('quantity', 0) * trade.get('price', 0):,.2f}"
+                })
+
+            st.dataframe(pd.DataFrame(trades_data), use_container_width=True)
+        else:
+            st.info("No recent trades")
+
+    def render_signals_tab(self):
+        """Render the signals tab."""
+        st.header("📡 Trading Signals")
+
+        # Generate Signals Button
+        col1, col2 = st.columns([1, 4])
+
+        with col1:
+            if st.button("🔄 Generate Signals", type="primary"):
+                with st.spinner("Generating trading signals..."):
+                    tickers = self.config.get('universe', {}).get('default_tickers', ['AAPL', 'MSFT'])
+                    signals = asyncio.run(self.generate_signals(tickers))
+                    st.success(f"✅ Generated {len(signals)} signals")
+                    st.rerun()
+
+        # Signals Display
+        signals_history = st.session_state.get('signals_data', [])
+
+        if signals_history:
+            # Convert to display format
+            display_data = []
+            for signal in signals_history[-20:]:  # Show last 20 signals
+                display_data.append({
+                    'Timestamp': signal.get('timestamp', ''),
+                    'Ticker': signal.get('ticker', ''),
+                    'Action': signal.get('action', ''),
+                    'Confidence': f"{signal.get('confidence', 0):.2%}",
+                    'Price': f"${signal.get('price', 0):.2f}" if signal.get('price', 0) else "N/A",
+                    'Reasoning': signal.get('reasoning', '')[:50] + "..." if signal.get('reasoning', '') and len(signal.get('reasoning', '')) > 50 else signal.get('reasoning', '')
+                })
+
+            st.dataframe(pd.DataFrame(display_data), use_container_width=True)
+
+            # Signal Actions (Manual Trading)
+            if not self.auto_trading_enabled:
+                st.subheader("Manual Trading Actions")
+
+                # Get latest signals
+                latest_signals = [s for s in signals_history if s.get('timestamp')]
+                latest_signals.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+
+                if latest_signals:
+                    col1, col2, col3 = st.columns(3)
+
+                    with col1:
+                        if st.button("✅ Execute BUY Signals", type="primary"):
+                            buy_signals = [s for s in latest_signals if s.get('action') == 'BUY']
+                            if buy_signals:
+                                executed = asyncio.run(self.execute_signals([TradingSignal(**s) for s in buy_signals]))
+                                st.success(f"✅ Executed {executed} BUY orders")
+                                st.rerun()
+                            else:
+                                st.info("No BUY signals to execute")
+
+                    with col2:
+                        if st.button("❌ Execute SELL Signals", type="secondary"):
+                            sell_signals = [s for s in latest_signals if s.get('action') == 'SELL']
+                            if sell_signals:
+                                executed = asyncio.run(self.execute_signals([TradingSignal(**s) for s in sell_signals]))
+                                st.success(f"✅ Executed {executed} SELL orders")
+                                st.rerun()
+                            else:
+                                st.info("No SELL signals to execute")
+
+                    with col3:
+                        if st.button("🔄 Execute All Signals"):
+                            if latest_signals:
+                                executed = asyncio.run(self.execute_signals([TradingSignal(**s) for s in latest_signals]))
+                                st.success(f"✅ Executed {executed} orders")
+                                st.rerun()
+                            else:
+                                st.info("No signals to execute")
+        else:
+            st.info("No signals available. Click 'Generate Signals' to create trading signals.")
+
+    def render_performance_tab(self):
+        """Render enhanced performance analysis dashboard."""
+        st.header("📈 Performance Dashboard")
+
+        if not self.portfolio:
+            st.warning("Portfolio not initialized")
+            return
+
+        # Get comprehensive performance metrics
+        trading_metrics = self._calculate_trading_performance()
+        risk_metrics = self._calculate_risk_metrics()
+
+        # Performance Overview Section
+        st.subheader("🎯 Performance Overview")
+
+        # Key Performance Indicators (Top Row)
+        col1, col2, col3, col4 = st.columns(4)
+
+        current_value = self.portfolio.calculate_total_equity()
+        initial_capital = self.portfolio.initial_capital
+        total_return = ((current_value - initial_capital) / initial_capital) * 100
+
+        with col1:
+            delta_color = "normal" if total_return >= 0 else "inverse"
+            st.metric(
+                "Total Return",
+                f"{total_return:+.2f}%",
+                delta=f"${current_value - initial_capital:+,.2f}",
+                delta_color=delta_color
+            )
+
+        with col2:
+            st.metric(
+                "Current Value",
+                f"${current_value:,.2f}",
+                delta=f"vs ${initial_capital:,.2f} initial"
+            )
+
+        with col3:
+            sharpe_ratio = risk_metrics.get('sharpe_ratio', 0)
+            sharpe_color = "normal" if sharpe_ratio > 1 else "inverse" if sharpe_ratio < 0.5 else "off"
+            st.metric(
+                "Sharpe Ratio",
+                f"{sharpe_ratio:.2f}",
+                delta="Good" if sharpe_ratio > 1 else "Poor" if sharpe_ratio < 0.5 else "Fair",
+                delta_color=sharpe_color
+            )
+
+        with col4:
+            max_drawdown = risk_metrics.get('max_drawdown_pct', 0)
+            dd_color = "normal" if max_drawdown > -10 else "inverse"
+            st.metric(
+                "Max Drawdown",
+                f"{max_drawdown:.1f}%",
+                delta="Low Risk" if max_drawdown > -10 else "High Risk",
+                delta_color=dd_color
+            )
+
+        # Trading Statistics (Second Row)
+        st.subheader("📊 Trading Statistics")
+        col5, col6, col7, col8 = st.columns(4)
+
+        with col5:
+            win_rate = trading_metrics['win_rate']
+            wr_color = "normal" if win_rate >= 50 else "inverse"
+            st.metric(
+                "Win Rate",
+                f"{win_rate:.1f}%",
+                delta=f"{trading_metrics['winning_trades']}/{trading_metrics['total_trades']} trades",
+                delta_color=wr_color
+            )
+
+        with col6:
+            profit_factor = trading_metrics['profit_factor']
+            pf_color = "normal" if profit_factor > 1.5 else "inverse" if profit_factor < 1 else "off"
+            st.metric(
+                "Profit Factor",
+                f"{profit_factor:.2f}",
+                delta="Excellent" if profit_factor > 2 else "Good" if profit_factor > 1.5 else "Poor",
+                delta_color=pf_color
+            )
+
+        with col7:
+            st.metric(
+                "Avg P/L per Trade",
+                f"${trading_metrics['avg_pl_per_trade']:,.2f}",
+                delta=f"Total: ${trading_metrics['total_pl']:,.2f}"
+            )
+
+        with col8:
+            avg_trade_duration = risk_metrics.get('avg_trade_duration_days', 0)
+            st.metric(
+                "Avg Hold Period",
+                f"{avg_trade_duration:.1f} days",
+                delta=f"Range: {risk_metrics.get('min_trade_duration', 0):.0f}-{risk_metrics.get('max_trade_duration', 0):.0f} days"
+            )
+
+        # Equity Curve
+        st.subheader("📈 Portfolio Equity Curve")
+
+        value_history = self.portfolio.get_portfolio_value_history()
+
+        if value_history and len(value_history) > 1:
+            df = pd.DataFrame(value_history)
+            df['date'] = pd.to_datetime(df['date'])
+            df = df.sort_values('date')
+
+            if PLOTLY_AVAILABLE:
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(
+                    x=df['date'],
+                    y=df['portfolio_value'],
+                    mode='lines',
+                    name='Portfolio Value',
+                    line=dict(color='#1f77b4', width=2)
+                ))
+
+                fig.add_hline(
+                    y=initial_capital,
+                    line_dash="dash",
+                    line_color="red",
+                    annotation_text=f"Initial: ${initial_capital:,.0f}"
+                )
+
+                fig.update_layout(
+                    title="Portfolio Value Over Time",
+                    xaxis_title="Date",
+                    yaxis_title="Portfolio Value ($)",
+                    height=400
+                )
+
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.line_chart(df.set_index('date')['portfolio_value'], use_container_width=True)
+        else:
+            st.info("Portfolio value history will appear after trading activity")
+
+    def render_logs_tab(self):
+        """Render logs tab with logs and debug info in separate columns."""
+        st.header("📝 System Logs & Debug Info")
+
+        # Create two columns
+        col1, col2 = st.columns(2)
+
+        # Left column: Logs
+        with col1:
+            st.subheader("📄 System Logs")
+            log_file_path = "logs/trading.log"
+
+            if os.path.exists(log_file_path):
+                try:
+                    with open(log_file_path, 'r') as f:
+                        log_lines = f.readlines()
+
+                    # Show last 100 lines
+                    recent_logs = log_lines[-100:]
+
+                    st.text_area(
+                        "Recent Logs",
+                        value=''.join(recent_logs),
+                        height=400,
+                        help="Showing last 100 log entries"
+                    )
+
+                    if st.button("📥 Download Full Logs"):
+                        with open(log_file_path, 'r') as f:
+                            st.download_button(
+                                label="Download",
+                                data=f.read(),
+                                file_name=f"trading_logs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log",
+                                mime="text/plain"
+                            )
+
+                except Exception as e:
+                    st.error(f"Failed to read log file: {str(e)}")
+            else:
+                st.info("No log file found")
+
+        # Right column: Debug Info
+        with col2:
+            st.subheader("🔍 Debug Info")
+
+            # Get trading app instance for debug info
+            trading_app = st.session_state.get('trading_app')
+
+            if trading_app:
+                st.write(f"**Session initialized:** {st.session_state.get('app_initialized', False)}")
+                st.write(f"**App initialized:** {trading_app.initialized}")
+                st.write(f"**Portfolio exists:** {trading_app.portfolio is not None}")
+                st.write(f"**Broker exists:** {trading_app.broker is not None}")
+                st.write(f"**Strategies count:** {len(trading_app.strategies) if hasattr(trading_app, 'strategies') else 0}")
+                st.write(f"**Signals in session:** {len(st.session_state.get('signals_data', []))}")
+
+                # Portfolio details if available
+                if trading_app.portfolio:
+                    st.markdown("**Portfolio Details:**")
+                    st.write(f"- Cash: ${trading_app.portfolio.cash:.2f}")
+                    st.write(f"- Total Value: ${trading_app.portfolio.get_total_value():.2f}")
+                    st.write(f"- Positions: {len(trading_app.portfolio.positions)}")
+
+                # Broker details if available
+                if trading_app.broker:
+                    st.markdown("**Broker Details:**")
+                    st.write(f"- Type: {type(trading_app.broker).__name__}")
+                    st.write(f"- Connected: {trading_app.broker.connected}")
+
+                # Configuration summary
+                st.markdown("**Configuration:**")
+                trading_env = self.config.get('trading_environment', 'paper')
+                st.write(f"- Environment: {trading_env}")
+                st.write(f"- Risk management: {self.config.get('risk_management', {}).get('enabled', False)}")
+            else:
+                st.warning("Trading app not initialized")
+
+    def render_settings_tab(self):
+        """Render the settings and configuration tab."""
+        st.header("⚙️ Settings & Configuration")
+
+        # Application Control Section
+        st.subheader("Application Control")
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            if st.button("🧹 Cleanup Async Tasks", type="secondary", help="Cancel all running async tasks and clean up resources"):
+                with st.spinner("Cleaning up async tasks..."):
+                    asyncio.run(self.cleanup())
+                    st.success("✅ Async cleanup completed")
+                    st.rerun()
+
+        with col2:
+            if st.button("🔄 Reset Session State", type="secondary", help="Reset all session state variables"):
+                # Clear session state
+                for key in list(st.session_state.keys()):
+                    del st.session_state[key]
+                st.success("✅ Session state reset")
+                st.rerun()
+
+        with col3:
+            if st.button("🔧 Reinitialize App", type="secondary", help="Reinitialize the trading application"):
+                with st.spinner("Reinitializing application..."):
+                    # Clear cached app
+                    initialize_trading_app.clear()
+                    st.success("✅ Application cache cleared - will reinitialize on next run")
+                    st.rerun()
+
+        # Configuration Display
+        st.subheader("Current Configuration")
+        st.json(self.config)
+
+        # System Information
+        st.subheader("System Information")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.write("**Application State:**")
+            st.write(f"- Initialized: {self.initialized}")
+            st.write(f"- Running: {self.running}")
+            st.write(f"- Auto Trading: {self.auto_trading_enabled}")
+            st.write(f"- Monitoring: {self.monitoring_enabled}")
+
+        with col2:
+            st.write("**Active Tasks:**")
+            trading_task = self.trading_loop_task is not None and not self.trading_loop_task.done() if self.trading_loop_task else False
+            risk_task = self.risk_monitoring_task is not None and not self.risk_monitoring_task.done() if self.risk_monitoring_task else False
+            monitoring_task = self.monitoring_task is not None and not self.monitoring_task.done() if self.monitoring_task else False
+
+            st.write(f"- Trading Loop: {'🟢' if trading_task else '🔴'}")
+            st.write(f"- Risk Monitoring: {'🟢' if risk_task else '🔴'}")
+            st.write(f"- Health Monitoring: {'🟢' if monitoring_task else '🔴'}")
+
+    def render_monitoring_tab(self):
+        """Render the monitoring and health dashboard."""
+        st.header("🔍 System Monitoring & Health")
+
+        # Health Status Overview
+        st.subheader("Health Status")
+
+        health_status = self.get_health_status()
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            system_status = health_status.get('system', {}).get('overall_status', 'UNKNOWN')
+            status_color = {
+                'HEALTHY': '🟢',
+                'DEGRADED': '🟡',
+                'UNHEALTHY': '🔴',
+                'UNKNOWN': '⚪'
+            }.get(system_status, '⚪')
+
+            st.metric("System Health", f"{status_color} {system_status}")
+
+        with col2:
+            app_health = health_status.get('application', {})
+            components_healthy = sum([
+                app_health.get('portfolio_initialized', False),
+                app_health.get('broker_connected', False),
+                app_health.get('strategies_loaded', False)
+            ])
+            total_components = 3
+
+            st.metric("App Components", f"{components_healthy}/{total_components} Healthy")
+
+        with col3:
+            if self.portfolio:
+                open_positions = len(self.portfolio.get_all_open_positions())
+                st.metric("Open Positions", open_positions)
+            else:
+                st.metric("Open Positions", "N/A")
+
+        # System Resources
+        st.subheader("System Resources")
+
+        try:
+            system_metrics = get_system_metrics()
+
+            if system_metrics:
+                col1, col2, col3, col4 = st.columns(4)
+
+                with col1:
+                    cpu_percent = system_metrics.get('cpu', {}).get('percent', 0)
+                    st.metric("CPU Usage", f"{cpu_percent:.1f}%")
+
+                with col2:
+                    memory_info = system_metrics.get('memory', {})
+                    memory_percent = memory_info.get('percent', 0)
+                    memory_used = memory_info.get('used_gb', 0)
+                    memory_total = memory_info.get('total_gb', 0)
+
+                    st.metric("Memory Usage", f"{memory_percent:.1f}%",
+                            f"{memory_used:.1f}GB / {memory_total:.1f}GB")
+
+                with col3:
+                    disk_info = system_metrics.get('disk', {})
+                    disk_percent = disk_info.get('percent', 0)
+                    disk_used = disk_info.get('used_gb', 0)
+                    disk_total = disk_info.get('total_gb', 0)
+
+                    st.metric("Disk Usage", f"{disk_percent:.1f}%",
+                            f"{disk_used:.1f}GB / {disk_total:.1f}GB")
+
+                with col4:
+                    # Network (basic)
+                    network_info = system_metrics.get('network', {})
+                    bytes_sent = network_info.get('bytes_sent', 0) / (1024**3)  # GB
+                    bytes_recv = network_info.get('bytes_recv', 0) / (1024**3)  # GB
+
+                    st.metric("Network I/O", f"↓{bytes_recv:.2f}GB ↑{bytes_sent:.2f}GB")
+            else:
+                st.error("Failed to get system metrics")
+        except Exception as e:
+            st.error(f"Error displaying system resources: {str(e)}")
+
+        # Monitoring Controls
+        st.subheader("Monitoring Controls")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            if st.button("🔄 Run Health Check Now", width='stretch'):
+                with st.spinner("Running health checks..."):
+                    # Force immediate health check
+                    self.show_system_notification("Health check started", "info")
+                    asyncio.run(self._perform_health_checks())
+                    self.show_system_notification("Health check completed successfully", "success")
+                    st.rerun()
+
+        with col2:
+            monitoring_status = "Disable" if self.monitoring_enabled else "Enable"
+            if st.button(f"{'🔴' if self.monitoring_enabled else '🟢'} {monitoring_status} Monitoring",
+                        width='stretch'):
+                if self.monitoring_enabled:
+                    asyncio.run(self.stop_monitoring())
+                    self.monitoring_enabled = False
+                    st.success("Monitoring disabled")
+                else:
+                    self.monitoring_enabled = True
+                    asyncio.run(self.start_monitoring())
+                    st.success("Monitoring enabled")
+                st.rerun()
+
+    def render_backtesting_tab(self):
+        """Render the backtesting interface."""
+        st.header("🔬 Strategy Backtesting")
+
+        # Import backtesting components
+        try:
+            from core.backtesting import BacktestEngine, run_backtest, compare_strategies
+            from strategy_layer.backtest_strategies import create_strategy
+            BACKTESTING_AVAILABLE = True
+        except ImportError as e:
+            st.error(f"Backtesting module not available: {e}")
+            st.info("Install required dependencies: pip install scipy")
+            BACKTESTING_AVAILABLE = False
+            return
+
+        if not BACKTESTING_AVAILABLE:
+            return
+
+        st.info("Backtesting functionality is available but UI implementation is in progress.")
+
+    def render_technical_analysis_tab(self):
+        """Render the technical analysis tab with interactive charts."""
+        st.header("📊 Technical Analysis")
+
+        if not PLOTLY_AVAILABLE:
+            st.error("Plotly is required for technical analysis charts")
+            return
+
+        st.info("Technical analysis functionality is available but UI implementation is in progress.")
+
 
 # Main entry point
 def main():

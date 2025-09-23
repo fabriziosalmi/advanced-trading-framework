@@ -1484,3 +1484,25 @@ task: <Task pending name='Task-1040' coro=<TradingApp.automated_risk_monitoring_
 2025-09-23 19:08:52,002 - strategy_layer.strategy_base.MLRandomForest - INFO - Model loaded for MSFT
 2025-09-23 19:08:52,018 - strategy_layer.strategy_base.MLRandomForest - INFO - 🎯 MSFT prediction confidence: 0.2905 (threshold: 0.3)
 2025-09-23 19:08:52,020 - TradingApp - INFO - Generated 1 signals from MLRandomForest
+2025-09-23 21:01:31,949 - TradingApp - WARNING - Config warning - environment.database_url: Environment variable DATABASE_URL referenced but not set
+2025-09-23 21:01:31,949 - TradingApp - WARNING - Config warning - environment.redis_url: Environment variable REDIS_URL referenced but not set
+2025-09-23 21:01:31,949 - TradingApp - WARNING - Config warning - environment.email_smtp_server: Environment variable EMAIL_SMTP_SERVER referenced but not set
+2025-09-23 21:01:31,949 - TradingApp - INFO - Initializing Trading Application
+2025-09-23 21:01:31,949 - core.portfolio - INFO - Portfolio state loaded: 2 positions, $94909.04 cash
+2025-09-23 21:01:31,950 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 21:01:31,950 - core.portfolio - INFO - Portfolio state loaded: 2 positions, $94909.04 cash
+2025-09-23 21:01:31,950 - TradingApp - INFO - Portfolio state loaded successfully
+2025-09-23 21:01:31,950 - execution_layer.base_broker.Paper - INFO - State loaded: $100000.00 cash, 0 positions
+2025-09-23 21:01:31,950 - execution_layer.base_broker.Paper - INFO - PaperBroker initialized with $100,000.00
+2025-09-23 21:01:31,950 - execution_layer.base_broker.Paper - INFO - Paper broker connected
+2025-09-23 21:01:31,950 - strategy_layer.strategy_base.MLRandomForest - INFO - Strategy 'MLRandomForest' initialized with confidence threshold: 0.3
+2025-09-23 21:01:31,950 - core.portfolio - INFO - Portfolio state loaded: 2 positions, $94909.04 cash
+2025-09-23 21:01:31,950 - core.portfolio - INFO - Portfolio state loaded from data/portfolio_state.json
+2025-09-23 21:01:31,950 - strategy_layer.strategy_base.MLRandomForest - INFO - Initializing ML Random Forest Strategy
+2025-09-23 21:01:31,950 - TradingApp - INFO - Initialized strategy: MLRandomForestStrategy
+2025-09-23 21:01:31,950 - TradingApp - INFO - Trading Application initialized successfully
+2025-09-23 21:01:31,950 - TradingApp - INFO - Starting monitoring tasks
+2025-09-23 21:01:31,950 - TradingApp - INFO - Monitoring tasks started successfully
+2025-09-23 21:01:32,964 - TradingApp - ERROR - Health check failed: 'Position' object has no attribute 'unrealized_pnl'
+2025-09-23 21:27:35,240 - core.portfolio - ERROR - Failed to load portfolio state: Expecting value: line 1 column 1 (char 0)
+2025-09-23 21:27:35,240 - core.portfolio - WARNING - Failed to load portfolio state from /var/folders/h8/6y19287n1sx6t9r4nmxwmpgw0000gn/T/tmp6e6jbbeq.json

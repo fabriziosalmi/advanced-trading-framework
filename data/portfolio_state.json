@@ -1,10 +1,51 @@
 {
   "initial_capital": 100000.0,
-  "current_cash": 100000.0,
+  "current_cash": 99985.69403686524,
   "created_timestamp": 1758561774.963184,
-  "last_saved": 1758628981.1309052,
+  "last_saved": 1758654530.573926,
   "positions": {},
-  "trade_history": [],
+  "trade_history": [
+    {
+      "timestamp": 1758653574.296501,
+      "action": "OPEN",
+      "ticker": "AAPL",
+      "quantity": 10.0,
+      "price": 254.39309692382812,
+      "side": "LONG",
+      "value": 2543.9309692382812
+    },
+    {
+      "timestamp": 1758653689.3458219,
+      "action": "OPEN",
+      "ticker": "MSFT",
+      "quantity": 5.0,
+      "price": 509.4049987792969,
+      "side": "LONG",
+      "value": 2547.0249938964844
+    },
+    {
+      "timestamp": 1758654530.4852748,
+      "action": "CLOSE",
+      "ticker": "AAPL",
+      "quantity": 10.0,
+      "entry_price": 254.39309692382812,
+      "exit_price": 253.7100067138672,
+      "side": "LONG",
+      "realized_pl": -6.83,
+      "days_held": 4.7387513849470354e-06
+    },
+    {
+      "timestamp": 1758654530.573917,
+      "action": "CLOSE",
+      "ticker": "MSFT",
+      "quantity": 5.0,
+      "entry_price": 509.4049987792969,
+      "exit_price": 507.9100036621094,
+      "side": "LONG",
+      "realized_pl": -7.47,
+      "days_held": 5.764638384183248e-06
+    }
+  ],
   "portfolio_value_history": [
     {
       "date": "2025-09-22",

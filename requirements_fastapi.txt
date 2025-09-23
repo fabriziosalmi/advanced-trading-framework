@@ -1,0 +1,35 @@
+# FastAPI Application Requirements
+# Core FastAPI and web framework dependencies
+
+# Core FastAPI
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# API documentation
+swagger-ui-bundle>=0.0.9
+redoc>=0.2.0
+
+# Async and WebSocket support
+websockets>=12.0
+aiofiles>=23.0.0
+
+# Validation and serialization
+pydantic>=2.4.0
+pydantic-settings>=2.0.3
+
+# CORS and middleware
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Database (optional - for session storage)
+sqlalchemy>=2.0.0
+alembic>=1.12.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+httpx>=0.25.0
+
+# Include all existing trading framework dependencies
+-r requirements.txt

@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Trading Framework</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        .sidebar-active {
+            transform: translateX(0);
+        }
+        .sidebar-inactive {
+            transform: translateX(-100%);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .status-green { background-color: #10b981; }
+        .status-red { background-color: #ef4444; }
+        .status-yellow { background-color: #f59e0b; }
+        .status-running { background-color: #10b981; }
+        .status-stopped { background-color: #ef4444; }
+        .status-emergency { background-color: #dc2626; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <button id="sidebarToggle" class="lg:hidden text-gray-600 dark:text-gray-300">
+                        <i class="bi bi-list text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white">Advanced Trading Framework</h1>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <!-- System Status -->
+                    <div class="flex items-center space-x-2">
+                        <span class="status-indicator status-green"></span>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">System Online</span>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                        <i class="bi bi-moon-stars dark:hidden"></i>
+                        <i class="bi bi-sun hidden dark:inline"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed lg:static z-30 bg-white dark:bg-gray-800 w-64 h-screen shadow-lg transition-transform duration-300 overflow-y-auto -translate-x-full lg:translate-x-0">
+            <div class="p-4">
+                <nav class="space-y-1">
+                    <!-- Dashboard -->
+                    <a href="#dashboard" class="nav-link active flex items-center space-x-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+                        <i class="bi bi-grid-1x2"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <!-- Trading Section -->
+                    <div class="menu-section">
+                        <div class="menu-header flex items-center justify-between p-3 text-gray-500 dark:text-gray-400 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg" data-section="trading">
+                            <span class="flex items-center space-x-2">
+                                <i class="bi bi-graph-up"></i>
+                                <span>Trading</span>
+                            </span>
+                            <i class="bi bi-chevron-right transform transition-transform menu-arrow"></i>
+                        </div>
+                        <div class="menu-items pl-6 space-y-1">
+                            <a href="#portfolio" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-pie-chart"></i>
+                                <span>Portfolio</span>
+                            </a>
+                            <a href="#trading" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-cart"></i>
+                                <span>Orders</span>
+                            </a>
+                            <a href="#positions" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-collection"></i>
+                                <span>Positions</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Section -->
+                    <div class="menu-section">
+                        <div class="menu-header flex items-center justify-between p-3 text-gray-500 dark:text-gray-400 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg" data-section="analytics">
+                            <span class="flex items-center space-x-2">
+                                <i class="bi bi-bar-chart"></i>
+                                <span>Analytics</span>
+                            </span>
+                            <i class="bi bi-chevron-right transform transition-transform menu-arrow"></i>
+                        </div>
+                        <div class="menu-items pl-6 space-y-1">
+                            <a href="#strategies" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-cpu"></i>
+                                <span>ML Strategies</span>
+                            </a>
+                            <a href="#backtesting" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-clock-history"></i>
+                                <span>Backtesting</span>
+                            </a>
+                            <a href="#performance" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-trophy"></i>
+                                <span>Performance</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Data Section -->
+                    <div class="menu-section">
+                        <div class="menu-header flex items-center justify-between p-3 text-gray-500 dark:text-gray-400 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg" data-section="data">
+                            <span class="flex items-center space-x-2">
+                                <i class="bi bi-database"></i>
+                                <span>Market Data</span>
+                            </span>
+                            <i class="bi bi-chevron-right transform transition-transform menu-arrow"></i>
+                        </div>
+                        <div class="menu-items pl-6 space-y-1">
+                            <a href="#data" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-graph-up-arrow"></i>
+                                <span>Live Data</span>
+                            </a>
+                            <a href="#charts" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-bar-chart-line"></i>
+                                <span>Charts</span>
+                            </a>
+                            <a href="#watchlist" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-eye"></i>
+                                <span>Watchlist</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- System Section -->
+                    <div class="menu-section">
+                        <div class="menu-header flex items-center justify-between p-3 text-gray-500 dark:text-gray-400 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg" data-section="system">
+                            <span class="flex items-center space-x-2">
+                                <i class="bi bi-gear"></i>
+                                <span>System</span>
+                            </span>
+                            <i class="bi bi-chevron-right transform transition-transform menu-arrow"></i>
+                        </div>
+                        <div class="menu-items pl-6 space-y-1">
+                            <a href="#monitoring" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-activity"></i>
+                                <span>Monitoring</span>
+                            </a>
+                            <a href="#logs" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-file-text"></i>
+                                <span>Logs</span>
+                            </a>
+                            <a href="#ml-models" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-cpu"></i>
+                                <span>ML Models</span>
+                            </a>
+                            <a href="#file-manager" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-folder"></i>
+                                <span>File Manager</span>
+                            </a>
+                            <a href="#settings" class="nav-link flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                <i class="bi bi-sliders"></i>
+                                <span>Settings</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="my-4 border-gray-200 dark:border-gray-700">
+
+                    <!-- Help & Support -->
+                    <a href="#help" class="nav-link flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                        <i class="bi bi-question-circle"></i>
+                        <span>Help & Support</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Overlay for mobile -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-0 lg:ml-0 min-h-screen overflow-y-auto transition-all duration-300">
+            <div class="max-w-7xl mx-auto p-4 lg:p-6">
+                <!-- Dashboard View -->
+                <div id="dashboard-view" class="view">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Dashboard</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Real-time overview of your trading system</p>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Portfolio Value</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="portfolioValue">$0.00</p>
+                                </div>
+                                <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+                                    <i class="bi bi-wallet2 text-green-600 dark:text-green-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Daily P&L</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="dailyPnl">$0.00</p>
+                                </div>
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                                    <i class="bi bi-graph-up text-blue-600 dark:text-blue-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Active Strategies</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="activeStrategies">0</p>
+                                </div>
+                                <div class="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
+                                    <i class="bi bi-cpu text-purple-600 dark:text-purple-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Open Positions</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="openPositions">0</p>
+                                </div>
+                                <div class="p-3 bg-yellow-100 dark:bg-yellow-900 rounded-full">
+                                    <i class="bi bi-collection text-yellow-600 dark:text-yellow-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trading Control Panel -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Trading Control</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">System Status:</span>
+                                <span id="tradingStatus" class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">Stopped</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Trading Mode -->
+                            <div class="space-y-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Trading Mode</label>
+                                <div class="flex items-center space-x-4">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="tradingMode" value="manual" class="form-radio text-blue-600" checked>
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Manual</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="tradingMode" value="automatic" class="form-radio text-blue-600">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Automatic</span>
+                                    </label>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Manual mode requires confirmation for each trade</p>
+                            </div>
+
+                            <!-- Risk Settings -->
+                            <div class="space-y-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Risk Settings</label>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600 dark:text-gray-400">Max Daily Loss:</span>
+                                        <input type="number" id="maxDailyLoss" value="1000" class="w-20 px-2 py-1 text-sm border rounded dark:bg-gray-700 dark:border-gray-600">
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600 dark:text-gray-400">Position Size $:</span>
+                                        <input type="number" id="positionSize" value="1000" class="w-20 px-2 py-1 text-sm border rounded dark:bg-gray-700 dark:border-gray-600">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Control Buttons -->
+                            <div class="space-y-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">System Control</label>
+                                <div class="space-y-2">
+                                    <button id="startTradingBtn" class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                        <i class="bi bi-play-fill mr-2"></i>Start Trading
+                                    </button>
+                                    <button id="stopTradingBtn" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors" disabled>
+                                        <i class="bi bi-stop-fill mr-2"></i>Stop Trading
+                                    </button>
+                                    <button id="emergencyStopBtn" class="w-full px-4 py-2 bg-red-800 text-white rounded-lg hover:bg-red-900 transition-colors">
+                                        <i class="bi bi-exclamation-triangle mr-2"></i>Emergency Stop
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Portfolio Performance</h3>
+                            <div style="height: 300px;">
+                                <canvas id="portfolioChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Asset Allocation</h3>
+                            <div style="height: 300px;">
+                                <canvas id="allocationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Recent Activity</h3>
+                        <div class="space-y-4" id="recentActivity">
+                            <!-- Activity items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio View -->
+                <div id="portfolio-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Portfolio Management</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Monitor your portfolio performance and positions</p>
+                    </div>
+
+                    <!-- Portfolio Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Total Value</h3>
+                            <p class="text-3xl font-bold text-green-600" id="portfolioTotalValue">$115,000</p>
+                            <p class="text-sm text-gray-500 mt-2">+2.34% today</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Available Cash</h3>
+                            <p class="text-3xl font-bold text-blue-600" id="portfolioCash">$15,000</p>
+                            <p class="text-sm text-gray-500 mt-2">Ready to invest</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Unrealized P&L</h3>
+                            <p class="text-3xl font-bold text-green-600" id="portfolioPnl">+$2,500</p>
+                            <p class="text-sm text-gray-500 mt-2">Across all positions</p>
+                        </div>
+                    </div>
+
+                    <!-- Positions Table -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Current Positions</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Symbol</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Quantity</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Avg Cost</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Current Price</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Market Value</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">P&L</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="positionsTable" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Positions will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trading View -->
+                <div id="trading-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Trading Operations</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Place orders and manage your trades</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Order Form -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Place Order</h3>
+                                <form id="orderForm" class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Symbol</label>
+                                        <input type="text" id="orderSymbol" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="AAPL">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Side</label>
+                                        <select id="orderSide" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                            <option value="buy">Buy</option>
+                                            <option value="sell">Sell</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Order Type</label>
+                                        <select id="orderType" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                            <option value="market">Market</option>
+                                            <option value="limit">Limit</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quantity</label>
+                                        <input type="number" id="orderQuantity" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="100">
+                                    </div>
+                                    <div id="limitPriceDiv" class="hidden">
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Limit Price</label>
+                                        <input type="number" step="0.01" id="orderPrice" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="150.00">
+                                    </div>
+                                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        Place Order
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Orders List -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Recent Orders</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                        <thead class="bg-gray-50 dark:bg-gray-700">
+                                            <tr>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Time</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Symbol</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Side</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Quantity</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Price</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ordersTable" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                            <!-- Orders will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Positions View -->
+                <div id="positions-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Open Positions</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Manage your current positions</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Symbol</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Quantity</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Avg Cost</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Current Price</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Market Value</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">P&L</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detailedPositionsTable" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Positions will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategies View -->
+                <div id="strategies-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">ML Strategies</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Configure and monitor your machine learning trading strategies</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <!-- Strategy Creation -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Create Strategy</h3>
+                            <form id="strategyForm" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Strategy Name</label>
+                                    <input type="text" id="strategyName" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="My ML Strategy">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Algorithm</label>
+                                    <select id="strategyAlgorithm" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                        <option value="ml_random_forest">Random Forest</option>
+                                        <option value="lgbm">LightGBM</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Symbols (comma-separated)</label>
+                                    <input type="text" id="strategySymbols" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="AAPL,GOOGL,MSFT">
+                                </div>
+                                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                                    Create Strategy
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Strategy Performance -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Performance Overview</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">Total Return</span>
+                                    <span class="text-green-600 font-semibold">+15.2%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">Sharpe Ratio</span>
+                                    <span class="text-blue-600 font-semibold">1.42</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">Max Drawdown</span>
+                                    <span class="text-red-600 font-semibold">-8.3%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">Win Rate</span>
+                                    <span class="text-green-600 font-semibold">68%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Strategies -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Active Strategies</h3>
+                        <div id="strategiesList" class="space-y-4">
+                            <!-- Strategies will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ML Models View -->
+                <div id="ml-models-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Machine Learning Models</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Manage ML models, training history, and performance metrics</p>
+                    </div>
+
+                    <!-- Model Performance Summary -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Active Models</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="activeModels">0</p>
+                                </div>
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                                    <i class="bi bi-cpu text-blue-600 dark:text-blue-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Best Model Accuracy</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="bestAccuracy">0%</p>
+                                </div>
+                                <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+                                    <i class="bi bi-trophy text-green-600 dark:text-green-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Training Jobs</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="trainingJobs">0</p>
+                                </div>
+                                <div class="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
+                                    <i class="bi bi-gear text-purple-600 dark:text-purple-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Management Actions -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Model Actions</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <button id="trainNewModelBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="bi bi-plus mr-2"></i>Train New Model
+                            </button>
+                            <button id="retrainBestModelBtn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                <i class="bi bi-arrow-clockwise mr-2"></i>Retrain Best Model
+                            </button>
+                            <button id="exportModelsBtn" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                                <i class="bi bi-download mr-2"></i>Export Models
+                            </button>
+                            <button id="cleanOldModelsBtn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                                <i class="bi bi-trash mr-2"></i>Clean Old Models
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Active Models Table -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Active Models</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full table-auto">
+                                <thead>
+                                    <tr class="border-b dark:border-gray-700">
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Model Name</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Type</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Accuracy</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Last Trained</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Status</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modelsTableBody">
+                                    <!-- Models will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Model Cards View -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Model Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="modelList">
+                            <!-- Models will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Training History -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Training History</h3>
+                        <div class="space-y-4" id="trainingHistory">
+                            <!-- Training history items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Manager View -->
+                <div id="file-manager-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">File Manager</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Manage models, data files, and clean up old/obsolete files</p>
+                    </div>
+
+                    <!-- Storage Overview -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Storage</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="totalStorage">0 GB</p>
+                                </div>
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                                    <i class="bi bi-hdd text-blue-600 dark:text-blue-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Model Files</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="modelFiles">0</p>
+                                </div>
+                                <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+                                    <i class="bi bi-file-binary text-green-600 dark:text-green-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Data Files</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="dataFiles">0</p>
+                                </div>
+                                <div class="p-3 bg-yellow-100 dark:bg-yellow-900 rounded-full">
+                                    <i class="bi bi-file-spreadsheet text-yellow-600 dark:text-yellow-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Old Files</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="oldFiles">0</p>
+                                </div>
+                                <div class="p-3 bg-red-100 dark:bg-red-900 rounded-full">
+                                    <i class="bi bi-exclamation-triangle text-red-600 dark:text-red-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cleanup Actions -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Cleanup Actions</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button id="removeOldModelsBtn" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                                <i class="bi bi-trash mr-2"></i>Remove Old Models (>30 days)
+                            </button>
+                            <button id="deleteFailedFilesBtn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                                <i class="bi bi-x-circle mr-2"></i>Delete Failed Training Files
+                            </button>
+                            <button id="archiveOldDataBtn" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                                <i class="bi bi-archive mr-2"></i>Archive Old Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- File Browser -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">File Browser</h3>
+                        <div class="space-y-4" id="fileList">
+                            <!-- Files will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings View -->
+                <div id="settings-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Settings</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Configure your trading framework preferences</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- General Settings -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">General</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                                    <button id="settingsDarkMode" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-600 transition-colors duration-200">
+                                        <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 translate-x-1"></span>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 dark:text-gray-300">Real-time Updates</span>
+                                    <button id="realTimeUpdates" class="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600 transition-colors duration-200">
+                                        <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 translate-x-6"></span>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 dark:text-gray-300">Notifications</span>
+                                    <button id="notifications" class="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600 transition-colors duration-200">
+                                        <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 translate-x-6"></span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Log Level</label>
+                                    <select id="logLevel" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                        <option value="DEBUG">Debug</option>
+                                        <option value="INFO" selected>Info</option>
+                                        <option value="WARNING">Warning</option>
+                                        <option value="ERROR">Error</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trading Environment -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Trading Environment</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Environment</label>
+                                    <select id="tradingEnvironment" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                        <option value="paper" selected>Paper Trading</option>
+                                        <option value="live">Live Trading</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Broker Type</label>
+                                    <select id="brokerType" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                        <option value="paper" selected>Paper Broker</option>
+                                        <option value="alpaca">Alpaca</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Initial Cash ($)</label>
+                                    <input type="number" id="initialCash" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="100000">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Commission ($)</label>
+                                    <input type="number" step="0.01" id="commission" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Portfolio & Risk -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Portfolio & Risk</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Position Size (%)</label>
+                                    <input type="number" step="0.01" id="maxPositionSize" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="1.0">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Positions</label>
+                                    <input type="number" id="maxPositions" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="10">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Daily Loss (%)</label>
+                                    <input type="number" step="0.01" id="maxDailyLossPercent" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="1.0">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Stop Loss (%)</label>
+                                    <input type="number" step="0.1" id="stopLossPercent" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="5.0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Automation Settings -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Automation</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 dark:text-gray-300">Enable Automation</span>
+                                    <button id="enableAutomation" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-600 transition-colors duration-200">
+                                        <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 translate-x-1"></span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Trading Interval (sec)</label>
+                                    <input type="number" id="tradingInterval" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="60">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Trades/Hour</label>
+                                    <input type="number" id="maxTradesPerHour" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="10">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Daily Trades</label>
+                                    <input type="number" id="maxDailyTrades" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Strategy Settings</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confidence Threshold</label>
+                                    <input type="number" step="0.01" id="confidenceThreshold" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="0.3">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lookback Period (days)</label>
+                                    <input type="number" id="lookbackPeriod" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="365">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Min Accuracy</label>
+                                    <input type="number" step="0.01" id="minAccuracy" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="0.65">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Retrain Frequency (days)</label>
+                                    <input type="number" id="retrainFrequency" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data & Universe Settings -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Data Sources</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Data Provider</label>
+                                    <select id="dataProvider" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                        <option value="yfinance" selected>Yahoo Finance</option>
+                                        <option value="alpaca">Alpaca</option>
+                                        <option value="manual">Manual</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Real-time Refresh (sec)</label>
+                                    <input type="number" id="realTimeRefresh" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="60">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Daily Refresh (sec)</label>
+                                    <input type="number" id="dailyRefresh" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="3600">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default Period</label>
+                                    <select id="defaultPeriod" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                        <option value="1y" selected>1 Year</option>
+                                        <option value="2y">2 Years</option>
+                                        <option value="5y">5 Years</option>
+                                        <option value="max">Maximum</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Trading Universe</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default Tickers</label>
+                                    <textarea id="defaultTickers" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="AAPL, MSFT, GOOGL">AAPL, MSFT</textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Min Market Cap ($B)</label>
+                                    <input type="number" id="minMarketCap" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="1">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Min Daily Volume</label>
+                                    <input type="number" id="minVolume" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="1000000">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Price Range ($)</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <input type="number" id="minPrice" placeholder="Min" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="1">
+                                        <input type="number" id="maxPrice" placeholder="Max" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="1000">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save Button -->
+                    <div class="mt-6 flex justify-end">
+                        <button id="saveSettings" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="bi bi-check-lg mr-2"></i>Save Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Backtesting View -->
+                <div id="backtesting-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Strategy Backtesting</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Test your strategies against historical data</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Backtest Configuration -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Run Backtest</h3>
+                                <form id="backtestForm" class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Strategy</label>
+                                        <select id="backtestStrategy" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                            <option value="ml_random_forest">ML Random Forest</option>
+                                            <option value="lgbm">LightGBM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Date</label>
+                                        <input type="date" id="backtestStartDate" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="2023-01-01">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Date</label>
+                                        <input type="date" id="backtestEndDate" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="2023-12-31">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Initial Capital</label>
+                                        <input type="number" id="backtestCapital" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="100000" placeholder="100000">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Symbols</label>
+                                        <input type="text" id="backtestSymbols" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="AAPL,GOOGL,MSFT">
+                                    </div>
+                                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        Run Backtest
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Backtest Results -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Results</h3>
+                                <div id="backtestResults" class="space-y-4">
+                                    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                                        Run a backtest to see results here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backtest History -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Backtest History</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Strategy</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Period</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Return</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Sharpe Ratio</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Max Drawdown</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Trades</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="backtestHistoryTable" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Backtest history will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mt-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Equity Curve</h3>
+                        <div style="height: 400px;">
+                            <canvas id="equityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="performance-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Performance Analytics</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Detailed performance analysis and metrics</p>
+                    </div>
+
+                    <!-- Performance Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Return</p>
+                                    <p class="text-2xl font-bold text-green-600" id="totalReturn">+12.5%</p>
+                                </div>
+                                <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+                                    <i class="bi bi-graph-up-arrow text-green-600 dark:text-green-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Sharpe Ratio</p>
+                                    <p class="text-2xl font-bold text-blue-600" id="sharpeRatio">1.42</p>
+                                </div>
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                                    <i class="bi bi-bar-chart text-blue-600 dark:text-blue-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Max Drawdown</p>
+                                    <p class="text-2xl font-bold text-red-600" id="maxDrawdown">-8.3%</p>
+                                </div>
+                                <div class="p-3 bg-red-100 dark:bg-red-900 rounded-full">
+                                    <i class="bi bi-graph-down text-red-600 dark:text-red-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Win Rate</p>
+                                    <p class="text-2xl font-bold text-purple-600" id="winRate">68.5%</p>
+                                </div>
+                                <div class="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
+                                    <i class="bi bi-trophy text-purple-600 dark:text-purple-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Equity Curve</h3>
+                            <div style="height: 300px;">
+                                <canvas id="equityChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Monthly Returns</h3>
+                            <div style="height: 300px;">
+                                <canvas id="monthlyReturnsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Table -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Trade History</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full table-auto">
+                                <thead>
+                                    <tr class="border-b dark:border-gray-700">
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Date</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Symbol</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Side</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Quantity</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Entry Price</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Exit Price</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">P&L</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Return %</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="performanceTableBody">
+                                    <!-- Performance data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monitoring View -->
+                <div id="monitoring-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">System Monitoring</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Monitor system health and performance</p>
+                    </div>
+
+                    <!-- System Health Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">CPU Usage</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="cpuUsage">45%</p>
+                                </div>
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                                    <i class="bi bi-cpu text-blue-600 dark:text-blue-300"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 45%" id="cpuBar"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Memory Usage</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="memoryUsage">62%</p>
+                                </div>
+                                <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+                                    <i class="bi bi-memory text-green-600 dark:text-green-300"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-600 h-2 rounded-full" style="width: 62%" id="memoryBar"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Active Connections</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="activeConnections">23</p>
+                                </div>
+                                <div class="p-3 bg-yellow-100 dark:bg-yellow-900 rounded-full">
+                                    <i class="bi bi-wifi text-yellow-600 dark:text-yellow-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Uptime</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white" id="systemUptime">12h 34m</p>
+                                </div>
+                                <div class="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
+                                    <i class="bi bi-clock text-purple-600 dark:text-purple-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Performance Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">CPU & Memory Usage</h3>
+                            <div style="height: 300px;">
+                                <canvas id="systemPerformanceChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Network Activity</h3>
+                            <div style="height: 300px;">
+                                <canvas id="networkChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Alerts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">System Alerts</h3>
+                            <div id="systemAlerts" class="space-y-3">
+                                <!-- Alerts will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Trading Metrics</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">Orders/Hour</span>
+                                    <span class="text-lg font-semibold text-gray-800 dark:text-white" id="ordersPerHour">12</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">API Calls/Min</span>
+                                    <span class="text-lg font-semibold text-gray-800 dark:text-white" id="apiCallsPerMin">45</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">Error Rate</span>
+                                    <span class="text-lg font-semibold text-green-600" id="errorRate">0.2%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 dark:text-gray-400">Avg Response Time</span>
+                                    <span class="text-lg font-semibold text-gray-800 dark:text-white" id="avgResponseTime">45ms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Process Information -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Running Processes</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Process</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">CPU</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Memory</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Uptime</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="processTable" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Process info will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="logs-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">System Logs</h2>
+                        <p class="text-gray-600 dark:text-gray-400">View system logs and debug information</p>
+                    </div>
+
+                    <!-- Log Controls -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center space-x-4">
+                                <select id="logLevel" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white">
+                                    <option value="all">All Levels</option>
+                                    <option value="error">Errors</option>
+                                    <option value="warning">Warnings</option>
+                                    <option value="info">Info</option>
+                                    <option value="debug">Debug</option>
+                                </select>
+                                <input type="date" id="logDate" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white">
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button id="refreshLogs" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    <i class="bi bi-arrow-clockwise mr-2"></i>Refresh
+                                </button>
+                                <button id="clearLogs" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                                    <i class="bi bi-trash mr-2"></i>Clear Logs
+                                </button>
+                                <button id="exportLogs" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                    <i class="bi bi-download mr-2"></i>Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Log Entries -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Log Entries</h3>
+                        <div class="space-y-2 max-h-96 overflow-y-auto" id="logEntries">
+                            <!-- Log entries will be populated by JavaScript -->
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button id="loadMoreLogs" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                Load More Logs
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Data View -->
+                <div id="data-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Live Market Data</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Real-time market data and quotes</p>
+                    </div>
+
+                    <!-- Market Overview Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">S&P 500</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white">4,567.89</p>
+                                </div>
+                                <span class="text-green-600 text-sm">+1.2%</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">NASDAQ</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white">14,123.45</p>
+                                </div>
+                                <span class="text-green-600 text-sm">+0.8%</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">DOW</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white">34,567.12</p>
+                                </div>
+                                <span class="text-red-600 text-sm">-0.3%</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">VIX</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white">18.45</p>
+                                </div>
+                                <span class="text-red-600 text-sm">+2.1%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Data Feed -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <!-- Quote Search -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Quote Search</h3>
+                            <div class="space-y-4">
+                                <div class="flex space-x-2">
+                                    <input type="text" id="symbolSearch" class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="Enter symbol (e.g., AAPL)">
+                                    <button id="searchQuote" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Search</button>
+                                </div>
+                                <div id="quoteResult" class="space-y-2">
+                                    <!-- Quote results will appear here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top Movers -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Top Movers</h3>
+                            <div class="space-y-3" id="topMovers">
+                                <!-- Top movers will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Market Data Table -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Live Quotes</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Symbol</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Last Price</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Change</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Change %</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Volume</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Last Update</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="marketDataTable" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Market data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts View -->
+                <div id="charts-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Charts & Analysis</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Interactive price charts and technical analysis</p>
+                    </div>
+
+                    <!-- Chart Controls -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                        <div class="flex flex-wrap items-center gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Symbol</label>
+                                <input type="text" id="chartSymbol" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" value="AAPL" placeholder="AAPL">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Timeframe</label>
+                                <select id="chartTimeframe" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                    <option value="1d">1 Day</option>
+                                    <option value="5d" selected>5 Days</option>
+                                    <option value="1m">1 Month</option>
+                                    <option value="3m">3 Months</option>
+                                    <option value="1y">1 Year</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Chart Type</label>
+                                <select id="chartType" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                    <option value="line" selected>Line</option>
+                                    <option value="candlestick">Candlestick</option>
+                                    <option value="area">Area</option>
+                                </select>
+                            </div>
+                            <button id="updateChart" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 mt-6">Update Chart</button>
+                        </div>
+                    </div>
+
+                    <!-- Main Chart -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <div style="height: 500px;">
+                            <canvas id="priceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="charts-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Charts & Analysis</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Interactive price charts and technical analysis</p>
+                    </div>
+                    <!-- Charts content will be added here -->
+                </div>
+
+                <div id="watchlist-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Watchlist</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Track your favorite stocks and securities</p>
+                    </div>
+
+                    <!-- Watchlist Controls -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="relative">
+                                    <input type="text" id="watchlistSearch" placeholder="Search symbols..." class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white">
+                                    <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+                                </div>
+                                <select id="watchlistSort" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white">
+                                    <option value="symbol">Symbol</option>
+                                    <option value="price">Price</option>
+                                    <option value="change">Change %</option>
+                                    <option value="volume">Volume</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button id="addToWatchlist" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    <i class="bi bi-plus mr-2"></i>Add Symbol
+                                </button>
+                                <button id="refreshWatchlist" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                    <i class="bi bi-arrow-clockwise mr-2"></i>Refresh
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Watchlist Table -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">My Watchlist</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full table-auto">
+                                <thead>
+                                    <tr class="border-b dark:border-gray-700">
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Symbol</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Name</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Price</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Change</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Change %</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Volume</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Market Cap</th>
+                                        <th class="text-left py-2 px-4 text-gray-700 dark:text-gray-300">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="watchlistTableBody">
+                                    <!-- Watchlist items will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 text-center text-gray-500 dark:text-gray-400" id="watchlistEmptyState">
+                            <i class="bi bi-star text-4xl mb-2"></i>
+                            <p>Your watchlist is empty. Add some symbols to get started!</p>
+                        </div>
+                    </div>
+
+                    <!-- Add Symbol Modal (hidden by default) -->
+                    <div id="addSymbolModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+                        <div class="flex items-center justify-center min-h-screen p-4">
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Add Symbol to Watchlist</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Symbol</label>
+                                        <input type="text" id="newSymbolInput" placeholder="e.g., AAPL, MSFT" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white">
+                                    </div>
+                                    <div class="flex justify-end space-x-2">
+                                        <button id="cancelAddSymbol" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                            Cancel
+                                        </button>
+                                        <button id="confirmAddSymbol" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                            Add Symbol
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="help-view" class="view hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Help & Support</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Documentation and support resources</p>
+                    </div>
+                    <!-- Help content will be added here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
