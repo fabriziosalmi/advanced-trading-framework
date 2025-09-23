@@ -2,7 +2,16 @@
 
 A production-quality, object-oriented trading framework with machine learning capabilities, real-time portfolio management, and a comprehensive Streamlit UI.
 
-## 🏗️ Architecture
+## � Recent Improvements
+
+### v1.1.0 - Production Readiness Enhancements
+- **🛡️ Division by Zero Protection**: Added robust checks in portfolio calculations to prevent division by zero errors
+- **💰 Financial Arithmetic**: Implemented proper Decimal arithmetic for all financial calculations to eliminate floating-point precision issues
+- **🔒 Thread Safety**: Added comprehensive thread locks for ML strategy cache access to prevent race conditions
+- **📊 Stop Loss Logic**: Enhanced position management with proper stop-loss and take-profit calculations
+- **🧹 Resource Cleanup**: Implemented proper cleanup for async tasks and thread pools to prevent resource leaks
+
+## �🏗️ Architecture
 
 The framework follows a layered architecture with clear separation of concerns:
 
@@ -220,23 +229,26 @@ python -m strategy_layer.ml_random_forest_strategy
 
 ### Signal Generation
 - **Confidence Filtering**: Only signals above threshold
-- **Risk Management**: Integrated stop-loss and take-profit
-- **Position Sizing**: Based on portfolio allocation rules
+- **Risk Management**: Integrated stop-loss and take-profit with proper financial arithmetic
+- **Position Sizing**: Based on portfolio allocation rules with division by zero protection
+- **Thread Safety**: Concurrent signal generation with proper locking mechanisms
 
 ## 🔒 Security & Risk
 
 ### Risk Management Features
 - **Position size limits** (default: 10% max per position)
 - **Daily loss limits** (default: 2% max daily loss)
-- **Stop-loss orders** (default: 5% stop loss)
-- **Portfolio diversification** controls
-- **Real-time risk monitoring**
+- **Stop-loss orders** (default: 5% stop loss) with precise Decimal calculations
+- **Portfolio diversification** controls with division by zero protection
+- **Real-time risk monitoring** with thread-safe operations
 
 ### Security Considerations
 - **API key protection** via environment variables
 - **Paper trading default** for safety
 - **Configuration validation**
 - **Error handling and logging**
+- **Thread-safe operations** for concurrent ML model access
+- **Resource cleanup** for async tasks and thread pools
 
 ## 📋 Dependencies
 
