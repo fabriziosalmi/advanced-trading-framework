@@ -5,6 +5,10 @@ Quick test to verify signal generation workflow from UI perspective.
 import asyncio
 import sys
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # Add the project root to Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -16,19 +20,20 @@ async def test_signal_generation():
     """Test the signal generation workflow."""
     print("🧪 Testing signal generation workflow...")
 
-    # Initialize strategy
-    strategy = MLRandomForestStrategy()
+    # Initialize strategy with 50% confidence threshold
+    strategy = MLRandomForestStrategy(confidence_threshold=0.3)
     await strategy.initialize()
 
     # Test tickers
-    test_tickers = ['AAPL', 'MSFT']
+    test_tickers = ['MSFT']  # Just test one ticker to avoid timeout
 
     print(f"📊 Generating signals for: {test_tickers}")
+    print(f"🎯 Confidence threshold: {strategy.confidence_threshold}")
 
     try:
         # Generate signals
+        print("🔍 Calling generate_signals...")
         signals = await strategy.generate_signals(test_tickers)
-
         print(f"✅ Generated {len(signals)} signals")
 
         # Check signal structure

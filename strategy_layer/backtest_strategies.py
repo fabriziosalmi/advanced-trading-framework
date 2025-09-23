@@ -164,7 +164,7 @@ class MLRandomForestBacktestStrategy(BacktestStrategy):
 
     def __init__(self, config: Dict[str, Any]):
         super().__init__("MLRandomForestBacktest", config)
-        self.confidence_threshold = config.get('confidence_threshold', 0.6)
+        self.confidence_threshold = config.get('confidence_threshold', 0.3)
         self.position_size = config.get('position_size', 0.05)
         self.models = {}  # Cache for loaded models
         self.scalers = {}  # Cache for loaded scalers

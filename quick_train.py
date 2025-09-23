@@ -35,7 +35,7 @@ async def quick_train():
     try:
         # Initialize strategy
         print("📊 Initializing ML Strategy...")
-        strategy = MLRandomForestStrategy(confidence_threshold=0.6)
+        strategy = MLRandomForestStrategy(confidence_threshold=0.3)
         await strategy.initialize()
         print("✅ Strategy initialized")
         

@@ -36,7 +36,7 @@ class Strategy(ABC):
     def __init__(
         self,
         name: str,
-        confidence_threshold: float = 0.6,
+        confidence_threshold: float = 0.3,
         config: Optional[Dict[str, Any]] = None
     ):
         """

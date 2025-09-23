@@ -60,7 +60,7 @@ class ModelTrainer:
                 'default_tickers': ['AAPL', 'MSFT', 'GOOGL', 'TSLA', 'NVDA'],
                 'strategies': {
                     'ml_random_forest': {
-                        'confidence_threshold': 0.6,
+                        'confidence_threshold': 0.5,
                         'enabled': True
                     }
                 }
@@ -85,13 +85,13 @@ class ModelTrainer:
             if model_type == 'rf':
                 confidence_threshold = self.config.get('trading', {}).get(
                     'strategies', {}
-                ).get('ml_random_forest', {}).get('confidence_threshold', 0.6)
+                ).get('ml_random_forest', {}).get('confidence_threshold', 0.5)
                 self.strategy = MLRandomForestStrategy(confidence_threshold=confidence_threshold)
                 strategy_name = "RandomForest"
             elif model_type == 'lgbm':
                 confidence_threshold = self.config.get('trading', {}).get(
                     'strategies', {}
-                ).get('ml_lgbm', {}).get('confidence_threshold', 0.6)
+                ).get('ml_lgbm', {}).get('confidence_threshold', 0.5)
                 self.strategy = MLLGBMStrategy(confidence_threshold=confidence_threshold)
                 strategy_name = "LightGBM"
             else:
@@ -392,8 +392,63 @@ async def main():
     parser.add_argument('--training-window', type=int, default=500, help='Training window size in days (default: 500)')
     parser.add_argument('--retrain-every', type=int, default=21, help='Retrain frequency in days (default: 21)')
     parser.add_argument('--test-period', type=int, default=252, help='Testing period in days (default: 252)')
+    parser.add_argument('--help-examples', action='store_true', help='Show detailed usage examples and exit')
     
     args = parser.parse_args()
+    
+    # Show help examples if requested
+    if args.help_examples:
+        print("🚀 Advanced Trading Framework - Model Training Script")
+        print("=" * 60)
+        print()
+        print("DESCRIPTION:")
+        print("  Train machine learning models for algorithmic trading strategies.")
+        print("  Supports Random Forest and LightGBM models with walk-forward validation.")
+        print()
+        print("USAGE EXAMPLES:")
+        print()
+        print("  Basic Training:")
+        print("    python train_models.py --tickers AAPL MSFT")
+        print("    python train_models.py --all")
+        print()
+        print("  Model Selection:")
+        print("    python train_models.py --model rf --tickers META")
+        print("    python train_models.py --model lgbm --tickers TSLA NVDA")
+        print()
+        print("  Walk-Forward Validation (Recommended for Production):")
+        print("    python train_models.py --walk-forward --tickers AAPL")
+        print("    python train_models.py --walk-forward --training-window 600 --retrain-every 30 --tickers MSFT")
+        print()
+        print("  Force Retraining:")
+        print("    python train_models.py --force --tickers AAPL")
+        print("    python train_models.py --force --all")
+        print()
+        print("  List Available Models:")
+        print("    python train_models.py --list")
+        print()
+        print("  Custom Configuration:")
+        print("    python train_models.py --config custom_config.yaml --tickers GOOGL")
+        print()
+        print("OPTIONS:")
+        print("  --tickers TICKERS    Train models for specific ticker symbols")
+        print("  --all                 Train models for all default tickers")
+        print("  --config FILE         Path to configuration file (default: config.yaml)")
+        print("  --force               Force retraining even if models exist")
+        print("  --list                List all currently trained models")
+        print("  --model {rf,lgbm}     Model type: rf=RandomForest, lgbm=LightGBM (default: rf)")
+        print("  --walk-forward        Use walk-forward validation for robust testing")
+        print("  --training-window N   Training window size in days (default: 500)")
+        print("  --retrain-every N     Retrain frequency in days (default: 21)")
+        print("  --test-period N       Testing period in days (default: 252)")
+        print("  --help-examples       Show this detailed help message")
+        print()
+        print("NOTES:")
+        print("  - Always activate virtual environment: source trading_env/bin/activate")
+        print("  - Models are saved in the 'models/' directory")
+        print("  - Training logs are written to 'logs/training.log'")
+        print("  - Walk-forward validation provides more realistic performance estimates")
+        print()
+        return
     
     # Initialize trainer
     trainer = ModelTrainer(args.config, args.training_window, args.retrain_every, args.test_period)
@@ -411,13 +466,13 @@ async def main():
         tickers = trainer.config.get('universe', {}).get('default_tickers', ['AAPL', 'MSFT'])
     else:
         print("❌ Please specify either --tickers or --all")
-        print("Usage examples:")
+        print()
+        print("💡 Quick Usage Examples:")
         print("  python train_models.py --tickers AAPL MSFT")
         print("  python train_models.py --all")
-        print("  python train_models.py --model lgbm --tickers META")
-        print("  python train_models.py --walk-forward --model lgbm --tickers META")
-        print("  python train_models.py --walk-forward --training-window 600 --retrain-every 30 --tickers META")
-        print("  python train_models.py --list")
+        print("  python train_models.py --help-examples  # For detailed help")
+        print()
+        print("💡 Use --help-examples for comprehensive usage guide")
         return
     
     # Initialize and train

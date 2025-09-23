@@ -209,7 +209,7 @@ async def test_strategy_layer():
         
         # Test ML Strategy (basic initialization)
         try:
-            strategy = MLRandomForestStrategy(confidence_threshold=0.6)
+            strategy = MLRandomForestStrategy(confidence_threshold=0.3)
             
             # Test initialization (might fail due to missing sklearn/yfinance)
             try:

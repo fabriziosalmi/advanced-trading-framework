@@ -2,13 +2,21 @@
   "initial_capital": 100000.0,
   "current_cash": 100000.0,
   "created_timestamp": 1758561774.963184,
-  "last_saved": 1758583954.828285,
+  "last_saved": 1758628981.1309052,
   "positions": {},
   "trade_history": [],
   "portfolio_value_history": [
     {
       "date": "2025-09-22",
       "timestamp": "2025-09-22T18:03:44.053964+00:00",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "positions_value": 0.0,
+      "num_positions": 0
+    },
+    {
+      "date": "2025-09-23",
+      "timestamp": "2025-09-23T07:54:45.279366+00:00",
       "portfolio_value": 100000.0,
       "cash": 100000.0,
       "positions_value": 0.0,

@@ -18,6 +18,7 @@ import logging.handlers
 import yaml
 import os
 import json
+import threading
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 import time
@@ -416,6 +417,8 @@ class TradingApp:
         
         # Automation control
         self.auto_trading_enabled = False
+        self.automation_loop: Optional[asyncio.AbstractEventLoop] = None
+        self.automation_thread: Optional[threading.Thread] = None
         self.trading_loop_task: Optional[asyncio.Task] = None
         self.risk_monitoring_task: Optional[asyncio.Task] = None
         
@@ -1008,23 +1011,59 @@ class TradingApp:
         finally:
             self.logger.info("🏁 Risk monitoring loop stopped")
 
-    async def start_automation(self):
-        """Start automated trading and risk monitoring loops."""
-        if self.auto_trading_enabled:
-            self.logger.warning("⚠️ Automation already running")
+    def start_automation_sync(self):
+        """Synchronous wrapper to start automation in a separate thread."""
+        if self.automation_thread and self.automation_thread.is_alive():
+            self.logger.warning("⚠️ Automation thread already running")
             return
         
-        if not self.initialized:
-            self.logger.error("❌ Cannot start automation - system not initialized")
+        def run_automation():
+            # Create new event loop for this thread
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            self.automation_loop = loop
+            
+            try:
+                # Run the async start method
+                loop.run_until_complete(self.start_automation())
+                # Keep running until stopped
+                loop.run_forever()
+            except Exception as e:
+                self.logger.error(f"Automation thread error: {e}")
+            finally:
+                # Clean up tasks
+                if self.trading_loop_task and not self.trading_loop_task.done():
+                    self.trading_loop_task.cancel()
+                if self.risk_monitoring_task and not self.risk_monitoring_task.done():
+                    self.risk_monitoring_task.cancel()
+                loop.close()
+        
+        self.automation_thread = threading.Thread(target=run_automation, daemon=True)
+        self.automation_thread.start()
+        self.logger.info("🚀 Automation thread started")
+
+    def stop_automation_sync(self):
+        """Synchronous wrapper to stop automation."""
+        if not self.automation_loop or not self.automation_thread:
+            self.logger.warning("⚠️ No automation running")
             return
         
-        self.auto_trading_enabled = True
+        try:
+            # Stop the event loop to terminate the automation thread
+            self.automation_loop.stop()
+            # Wait for thread to finish
+            if self.automation_thread.is_alive():
+                self.automation_thread.join(timeout=2.0)
+        except Exception as e:
+            self.logger.error(f"Error stopping automation: {e}")
         
-        # Start both loops concurrently
-        self.trading_loop_task = asyncio.create_task(self.automated_trading_loop())
-        self.risk_monitoring_task = asyncio.create_task(self.automated_risk_monitoring_loop())
-        
-        self.logger.info("🚀 Automated trading and risk monitoring started")
+        # Clean up
+        self.auto_trading_enabled = False
+        self.automation_loop = None
+        self.automation_thread = None
+        self.trading_loop_task = None
+        self.risk_monitoring_task = None
+        self.logger.info("🛑 Automation stopped")
 
     async def stop_automation(self):
         """Stop automated trading and risk monitoring loops."""
@@ -1260,11 +1299,11 @@ class TradingApp:
             if auto_trading != self.auto_trading_enabled:
                 if auto_trading:
                     # Start automation
-                    asyncio.run(self.start_automation())
+                    self.start_automation_sync()
                     st.success("🤖 Automated trading started!")
                 else:
                     # Stop automation
-                    asyncio.run(self.stop_automation())
+                    self.stop_automation_sync()
                     st.info("🛑 Automated trading stopped")
                 st.rerun()
             
@@ -1272,7 +1311,7 @@ class TradingApp:
             if self.auto_trading_enabled:
                 st.success("🟢 Automation Active")
                 if st.button("🛑 Stop Automation"):
-                    asyncio.run(self.stop_automation())
+                    self.stop_automation_sync()
                     st.rerun()
             else:
                 st.info("🔴 Manual Mode")
