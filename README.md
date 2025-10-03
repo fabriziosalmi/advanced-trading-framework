@@ -1,15 +1,7 @@
 # 🚀 Advanced Trading Framework
 
-A production-quality, object-oriented trading framework with machine learning capabilities, real-time portfolio management, and a comprehensive Streamlit UI.
+A trading framework with machine learning capabilities, real-time portfolio management, and a comprehensive Streamlit UI.
 
-## � Recent Improvements
-
-### v1.1.0 - Production Readiness Enhancements
-- **🛡️ Division by Zero Protection**: Added robust checks in portfolio calculations to prevent division by zero errors
-- **💰 Financial Arithmetic**: Implemented proper Decimal arithmetic for all financial calculations to eliminate floating-point precision issues
-- **🔒 Thread Safety**: Added comprehensive thread locks for ML strategy cache access to prevent race conditions
-- **📊 Stop Loss Logic**: Enhanced position management with proper stop-loss and take-profit calculations
-- **🧹 Resource Cleanup**: Implemented proper cleanup for async tasks and thread pools to prevent resource leaks
 
 ## �🏗️ Architecture
 
