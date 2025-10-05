@@ -3,7 +3,7 @@
 A trading framework with machine learning capabilities, real-time portfolio management, and a comprehensive Streamlit UI.
 
 
-## �🏗️ Architecture
+## 🏗️ Architecture
 
 The framework follows a layered architecture with clear separation of concerns:
 
@@ -14,7 +14,14 @@ advanced-trading-framework/
 ├── core/                          # Core data structures
 │   ├── __init__.py
 │   ├── position.py               # Position dataclass with serialization
-│   └── portfolio.py              # Portfolio management and analytics
+│   ├── portfolio.py              # Portfolio management and analytics
+│   ├── backtesting.py            # Backtesting engine
+│   ├── risk_management.py        # Risk management utilities
+│   ├── monitoring.py             # System monitoring
+│   ├── benchmarking.py           # Performance benchmarking
+│   ├── config_validator.py       # Configuration validation
+│   ├── error_handler.py          # Error handling utilities
+│   └── validation.py             # Input validation decorators
 ├── execution_layer/              # Broker abstraction layer
 │   ├── __init__.py
 │   ├── base_broker.py           # Abstract broker interface
@@ -24,12 +31,29 @@ advanced-trading-framework/
 │   ├── __init__.py
 │   ├── signals.py               # TradingSignal dataclass
 │   ├── strategy_base.py         # Strategy ABC
-│   ├── base_strategy.py         # Legacy strategy (being refactored)
-│   └── ml_random_forest_strategy.py  # ML strategy implementation
+│   ├── base_strategy.py         # Enhanced strategy base class
+│   ├── ml_random_forest_strategy.py  # ML Random Forest strategy
+│   ├── lgbm_strategy.py         # LightGBM strategy
+│   ├── ml_strategy.py           # Base ML strategy class
+│   ├── advanced_features.py     # Advanced feature engineering
+│   ├── market_regime_filter.py  # Market regime detection
+│   └── backtest_strategies.py   # Backtesting strategies
+├── fastapi_app/                 # FastAPI REST API backend
+│   ├── main.py                  # FastAPI application
+│   ├── database.py              # Database utilities
+│   ├── models/                  # Pydantic models
+│   ├── routers/                 # API route handlers
+│   └── static/                  # Frontend assets
+├── frontend/                    # React/Vite frontend (optional)
+│   ├── src/                     # Frontend source code
+│   └── package.json             # Node.js dependencies
 ├── app.py                       # Main Streamlit application
 ├── config.yaml                  # Configuration file
-├── requirements.txt             # Dependencies
-├── run_app.py                   # Launch script
+├── requirements.txt             # Python dependencies
+├── requirements_fastapi.txt     # FastAPI dependencies
+├── run_app.py                   # Streamlit launch script
+├── run_fastapi.py               # FastAPI launch script
+├── train_models.py              # ML model training script
 └── README.md                    # This file
 ```
 
@@ -63,6 +87,15 @@ advanced-trading-framework/
 - **Risk management controls** with configurable parameters
 - **System logs** with downloadable history
 
+### 🚀 FastAPI REST API (Optional)
+- **RESTful API** with automatic OpenAPI documentation
+- **WebSocket support** for real-time updates
+- **Portfolio management** endpoints
+- **Trading operations** API
+- **Strategy management** and backtesting
+- **Market data** and watchlist management
+- **Dashboard metrics** and monitoring
+
 ## 🚀 Quick Start
 
 ### 1. Installation
@@ -87,15 +120,28 @@ The `config.yaml` file contains all configurable parameters:
 
 ### 3. Environment Variables (Optional)
 
-For Alpaca live trading, set these environment variables:
+For Alpaca live trading, you can either set environment variables or use a `.env` file:
 
+**Option A: Environment Variables**
 ```bash
 export ALPACA_API_KEY="your_alpaca_api_key"
 export ALPACA_SECRET_KEY="your_alpaca_secret_key"
 ```
 
+**Option B: Using .env file**
+```bash
+# Copy the template
+cp .env.template .env
+
+# Edit .env with your credentials
+nano .env
+```
+
+The `.env.template` file contains all available environment variables with examples.
+
 ### 4. Launch Application
 
+**Option A: Streamlit UI (Recommended for beginners)**
 ```bash
 # Using the launch script
 python run_app.py
@@ -104,29 +150,84 @@ python run_app.py
 streamlit run app.py
 ```
 
-The application will be available at `http://localhost:8501`
+The Streamlit application will be available at `http://localhost:8501`
+
+**Option B: FastAPI REST API (For API integration)**
+```bash
+# Install FastAPI dependencies
+pip install -r requirements_fastapi.txt
+
+# Launch the API server
+python run_fastapi.py
+
+# Or directly with uvicorn
+uvicorn fastapi_app.main:app --reload
+```
+
+The FastAPI application will be available at:
+- API: `http://localhost:8000`
+- Interactive API docs: `http://localhost:8000/api/docs`
+- Alternative docs: `http://localhost:8000/api/redoc`
 
 ## 📊 Usage Guide
 
-### Portfolio Tab
+### Using Streamlit UI
+
+#### Portfolio Tab
 - View current positions and their P&L
 - Monitor total portfolio value and cash
 - Track daily and total returns
 
-### Signals Tab
+#### Signals Tab
 - Review recent trading signals
 - Monitor signal statistics (buy/sell ratio, confidence)
 - Analyze signal reasoning and metadata
 
-### Performance Tab
+#### Performance Tab
 - View performance metrics (Sharpe ratio, win rate)
 - Analyze portfolio value over time
 - Compare against benchmarks
 
-### Settings Tab
+#### Settings Tab
 - View current configuration
 - Modify strategy parameters
 - Adjust risk management settings
+
+### Using FastAPI REST API
+
+The FastAPI interface provides a programmatic way to interact with the trading framework:
+
+#### Interactive Documentation
+Access the auto-generated API documentation at:
+- Swagger UI: `http://localhost:8000/api/docs`
+- ReDoc: `http://localhost:8000/api/redoc`
+
+#### Key API Endpoints
+- **Portfolio**: `/api/portfolio` - Get portfolio summary and positions
+- **Trading**: `/api/trading/orders` - Place and manage orders
+- **Strategies**: `/api/strategies` - List and configure strategies
+- **Backtesting**: `/api/backtesting` - Run backtests and get results
+- **Market Data**: `/api/data` - Fetch historical and real-time data
+- **Watchlist**: `/api/watchlist` - Manage symbol watchlists
+- **Monitoring**: `/api/monitoring` - System health and metrics
+
+#### Example API Usage
+```python
+import requests
+
+# Get portfolio summary
+response = requests.get('http://localhost:8000/api/portfolio/summary')
+portfolio = response.json()
+
+# Place an order
+order = {
+    'symbol': 'AAPL',
+    'quantity': 10,
+    'side': 'buy',
+    'order_type': 'market'
+}
+response = requests.post('http://localhost:8000/api/trading/orders', json=order)
+```
 
 ## 🔧 Configuration
 
@@ -195,8 +296,11 @@ class MyStrategy(Strategy):
 ### Testing
 
 ```bash
-# Run syntax validation
-python test_syntax.py
+# Run integration tests
+python test_integration.py
+
+# Test signal generation
+python test_signal_generation.py
 
 # Test individual components
 python -m core.portfolio
@@ -248,14 +352,31 @@ python -m strategy_layer.ml_random_forest_strategy
 - `pandas>=2.0.0` - Data manipulation
 - `numpy>=1.24.0` - Numerical computing
 - `scikit-learn>=1.3.0` - Machine learning
+- `lightgbm>=4.0.0` - Gradient boosting framework
 - `streamlit>=1.28.0` - Web interface
 - `yfinance>=0.2.18` - Market data
 - `alpaca-trade-api>=3.0.0` - Broker API
+- `plotly>=5.15.0` - Interactive charting
+- `matplotlib>=3.7.0` - Static plots
+- `pyyaml>=6.0` - Configuration management
+- `python-dotenv>=1.0.0` - Environment variable management
+- `requests>=2.31.0` - HTTP requests
+- `aiohttp>=3.8.0` - Async HTTP
+- `tenacity>=8.2.0` - Retry mechanisms
+
+### FastAPI Dependencies (Optional)
+Install with `pip install -r requirements_fastapi.txt`:
+- `fastapi>=0.104.0` - Modern API framework
+- `uvicorn[standard]>=0.24.0` - ASGI server
+- `pydantic>=2.4.0` - Data validation
+- `websockets>=12.0` - Real-time communication
+- `sqlalchemy>=2.0.0` - Database ORM
 
 ### Optional Dependencies
-- `plotly>=5.15.0` - Advanced charting
 - `scipy>=1.11.0` - Scientific computing
 - `statsmodels>=0.14.0` - Statistical modeling
+- `pytest>=7.4.0` - Testing framework
+- `pytest-asyncio>=0.21.0` - Async testing
 
 ## 🐛 Troubleshooting
 

@@ -1,9 +1,82 @@
+# Environment and credentials
 .env
-.github/
-trading_env/
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
-logs/trading.log
-.vscode/settings.json
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
+env/
+venv/
+trading_env/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Data and models
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+models/*.pkl
+models/*.joblib
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Reports and outputs
+reports/*.html
+reports/*.pdf
+reports/*.png
+reports/*.jpg
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# Node.js (for frontend)
+node_modules/
+npm-debug.log
+yarn-error.log
+frontend/dist/
+frontend/build/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Testing
+.tox/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*.cover
+
+# GitHub specific
+.github/
