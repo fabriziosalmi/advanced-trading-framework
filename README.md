@@ -3,7 +3,7 @@
 A trading framework with machine learning capabilities, real-time portfolio management, and a comprehensive Streamlit UI.
 
 
-## �🏗️ Architecture
+## 🏗️ Architecture
 
 The framework follows a layered architecture with clear separation of concerns:
 
@@ -14,7 +14,14 @@ advanced-trading-framework/
 ├── core/                          # Core data structures
 │   ├── __init__.py
 │   ├── position.py               # Position dataclass with serialization
-│   └── portfolio.py              # Portfolio management and analytics
+│   ├── portfolio.py              # Portfolio management and analytics
+│   ├── backtesting.py            # Backtesting engine
+│   ├── risk_management.py        # Risk management utilities
+│   ├── monitoring.py             # System monitoring
+│   ├── benchmarking.py           # Performance benchmarking
+│   ├── config_validator.py       # Configuration validation
+│   ├── error_handler.py          # Error handling utilities
+│   └── validation.py             # Input validation decorators
 ├── execution_layer/              # Broker abstraction layer
 │   ├── __init__.py
 │   ├── base_broker.py           # Abstract broker interface
@@ -24,12 +31,29 @@ advanced-trading-framework/
 │   ├── __init__.py
 │   ├── signals.py               # TradingSignal dataclass
 │   ├── strategy_base.py         # Strategy ABC
-│   ├── base_strategy.py         # Legacy strategy (being refactored)
-│   └── ml_random_forest_strategy.py  # ML strategy implementation
+│   ├── base_strategy.py         # Enhanced strategy base class
+│   ├── ml_random_forest_strategy.py  # ML Random Forest strategy
+│   ├── lgbm_strategy.py         # LightGBM strategy
+│   ├── ml_strategy.py           # Base ML strategy class
+│   ├── advanced_features.py     # Advanced feature engineering
+│   ├── market_regime_filter.py  # Market regime detection
+│   └── backtest_strategies.py   # Backtesting strategies
+├── fastapi_app/                 # FastAPI REST API backend
+│   ├── main.py                  # FastAPI application
+│   ├── database.py              # Database utilities
+│   ├── models/                  # Pydantic models
+│   ├── routers/                 # API route handlers
+│   └── static/                  # Frontend assets
+├── frontend/                    # React/Vite frontend (optional)
+│   ├── src/                     # Frontend source code
+│   └── package.json             # Node.js dependencies
 ├── app.py                       # Main Streamlit application
 ├── config.yaml                  # Configuration file
-├── requirements.txt             # Dependencies
-├── run_app.py                   # Launch script
+├── requirements.txt             # Python dependencies
+├── requirements_fastapi.txt     # FastAPI dependencies
+├── run_app.py                   # Streamlit launch script
+├── run_fastapi.py               # FastAPI launch script
+├── train_models.py              # ML model training script
 └── README.md                    # This file
 ```
 
@@ -62,6 +86,15 @@ advanced-trading-framework/
 - **Performance visualization** with charts
 - **Risk management controls** with configurable parameters
 - **System logs** with downloadable history
+
+### 🚀 FastAPI REST API (Optional)
+- **RESTful API** with automatic OpenAPI documentation
+- **WebSocket support** for real-time updates
+- **Portfolio management** endpoints
+- **Trading operations** API
+- **Strategy management** and backtesting
+- **Market data** and watchlist management
+- **Dashboard metrics** and monitoring
 
 ## 🚀 Quick Start
 
@@ -96,6 +129,7 @@ export ALPACA_SECRET_KEY="your_alpaca_secret_key"
 
 ### 4. Launch Application
 
+**Option A: Streamlit UI (Recommended for beginners)**
 ```bash
 # Using the launch script
 python run_app.py
@@ -104,7 +138,24 @@ python run_app.py
 streamlit run app.py
 ```
 
-The application will be available at `http://localhost:8501`
+The Streamlit application will be available at `http://localhost:8501`
+
+**Option B: FastAPI REST API (For API integration)**
+```bash
+# Install FastAPI dependencies
+pip install -r requirements_fastapi.txt
+
+# Launch the API server
+python run_fastapi.py
+
+# Or directly with uvicorn
+uvicorn fastapi_app.main:app --reload
+```
+
+The FastAPI application will be available at:
+- API: `http://localhost:8000`
+- Interactive API docs: `http://localhost:8000/api/docs`
+- Alternative docs: `http://localhost:8000/api/redoc`
 
 ## 📊 Usage Guide
 

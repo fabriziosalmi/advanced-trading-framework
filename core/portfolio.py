@@ -504,6 +504,30 @@ class Portfolio:
             f"Return: {summary['total_return_pct']:.1f}%)"
         )
     
+    def to_dict(self) -> dict:
+        """
+        Convert portfolio to dictionary representation.
+        
+        This method provides a comprehensive dictionary representation of the
+        portfolio state, suitable for serialization and API responses.
+        
+        Returns:
+            Dictionary containing all portfolio data
+        """
+        return {
+            'initial_capital': self.initial_capital,
+            'current_cash': self.current_cash,
+            'created_timestamp': self.created_timestamp,
+            'positions': {
+                ticker: position.to_dict() 
+                for ticker, position in self.positions.items()
+            },
+            'trade_history': self.trade_history,
+            'portfolio_value_history': self.portfolio_value_history,
+            'summary': self.get_portfolio_summary(),
+            'risk_metrics': self.get_risk_metrics()
+        }
+    
     def sync_with_broker(self, broker_positions: Dict[str, float]) -> None:
         """
         Synchronize portfolio positions with broker's actual positions.
