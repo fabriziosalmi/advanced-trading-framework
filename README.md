@@ -120,12 +120,24 @@ The `config.yaml` file contains all configurable parameters:
 
 ### 3. Environment Variables (Optional)
 
-For Alpaca live trading, set these environment variables:
+For Alpaca live trading, you can either set environment variables or use a `.env` file:
 
+**Option A: Environment Variables**
 ```bash
 export ALPACA_API_KEY="your_alpaca_api_key"
 export ALPACA_SECRET_KEY="your_alpaca_secret_key"
 ```
+
+**Option B: Using .env file**
+```bash
+# Copy the template
+cp .env.template .env
+
+# Edit .env with your credentials
+nano .env
+```
+
+The `.env.template` file contains all available environment variables with examples.
 
 ### 4. Launch Application
 
@@ -159,25 +171,63 @@ The FastAPI application will be available at:
 
 ## 📊 Usage Guide
 
-### Portfolio Tab
+### Using Streamlit UI
+
+#### Portfolio Tab
 - View current positions and their P&L
 - Monitor total portfolio value and cash
 - Track daily and total returns
 
-### Signals Tab
+#### Signals Tab
 - Review recent trading signals
 - Monitor signal statistics (buy/sell ratio, confidence)
 - Analyze signal reasoning and metadata
 
-### Performance Tab
+#### Performance Tab
 - View performance metrics (Sharpe ratio, win rate)
 - Analyze portfolio value over time
 - Compare against benchmarks
 
-### Settings Tab
+#### Settings Tab
 - View current configuration
 - Modify strategy parameters
 - Adjust risk management settings
+
+### Using FastAPI REST API
+
+The FastAPI interface provides a programmatic way to interact with the trading framework:
+
+#### Interactive Documentation
+Access the auto-generated API documentation at:
+- Swagger UI: `http://localhost:8000/api/docs`
+- ReDoc: `http://localhost:8000/api/redoc`
+
+#### Key API Endpoints
+- **Portfolio**: `/api/portfolio` - Get portfolio summary and positions
+- **Trading**: `/api/trading/orders` - Place and manage orders
+- **Strategies**: `/api/strategies` - List and configure strategies
+- **Backtesting**: `/api/backtesting` - Run backtests and get results
+- **Market Data**: `/api/data` - Fetch historical and real-time data
+- **Watchlist**: `/api/watchlist` - Manage symbol watchlists
+- **Monitoring**: `/api/monitoring` - System health and metrics
+
+#### Example API Usage
+```python
+import requests
+
+# Get portfolio summary
+response = requests.get('http://localhost:8000/api/portfolio/summary')
+portfolio = response.json()
+
+# Place an order
+order = {
+    'symbol': 'AAPL',
+    'quantity': 10,
+    'side': 'buy',
+    'order_type': 'market'
+}
+response = requests.post('http://localhost:8000/api/trading/orders', json=order)
+```
 
 ## 🔧 Configuration
 
@@ -246,8 +296,11 @@ class MyStrategy(Strategy):
 ### Testing
 
 ```bash
-# Run syntax validation
-python test_syntax.py
+# Run integration tests
+python test_integration.py
+
+# Test signal generation
+python test_signal_generation.py
 
 # Test individual components
 python -m core.portfolio
@@ -299,14 +352,31 @@ python -m strategy_layer.ml_random_forest_strategy
 - `pandas>=2.0.0` - Data manipulation
 - `numpy>=1.24.0` - Numerical computing
 - `scikit-learn>=1.3.0` - Machine learning
+- `lightgbm>=4.0.0` - Gradient boosting framework
 - `streamlit>=1.28.0` - Web interface
 - `yfinance>=0.2.18` - Market data
 - `alpaca-trade-api>=3.0.0` - Broker API
+- `plotly>=5.15.0` - Interactive charting
+- `matplotlib>=3.7.0` - Static plots
+- `pyyaml>=6.0` - Configuration management
+- `python-dotenv>=1.0.0` - Environment variable management
+- `requests>=2.31.0` - HTTP requests
+- `aiohttp>=3.8.0` - Async HTTP
+- `tenacity>=8.2.0` - Retry mechanisms
+
+### FastAPI Dependencies (Optional)
+Install with `pip install -r requirements_fastapi.txt`:
+- `fastapi>=0.104.0` - Modern API framework
+- `uvicorn[standard]>=0.24.0` - ASGI server
+- `pydantic>=2.4.0` - Data validation
+- `websockets>=12.0` - Real-time communication
+- `sqlalchemy>=2.0.0` - Database ORM
 
 ### Optional Dependencies
-- `plotly>=5.15.0` - Advanced charting
 - `scipy>=1.11.0` - Scientific computing
 - `statsmodels>=0.14.0` - Statistical modeling
+- `pytest>=7.4.0` - Testing framework
+- `pytest-asyncio>=0.21.0` - Async testing
 
 ## 🐛 Troubleshooting
 
